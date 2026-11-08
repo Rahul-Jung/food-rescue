@@ -27,9 +27,12 @@ describe('NPT times (UTC+05:45)', () => {
     expect(formatTime('2026-11-08T03:20:00Z')).toBe('9:05 AM');
   });
 
-  it('formats in Nepali with optional Devanagari digits', () => {
-    expect(formatTime('2026-11-08T11:45:00Z', 'ne')).toBe('5:30 अपराह्न');
-    expect(formatTime('2026-11-08T03:20:00Z', 'ne', 'devanagari')).toBe('९:०५ पूर्वाह्न');
+  it('formats in Nepali with everyday day parts and optional Devanagari digits', () => {
+    expect(formatTime('2026-11-08T11:45:00Z', 'ne')).toBe('साँझ 5:30'); // 17:30
+    expect(formatTime('2026-11-08T03:20:00Z', 'ne', 'devanagari')).toBe('बिहान ९:०५'); // 09:05
+    expect(formatTime('2026-11-08T07:15:00Z', 'ne')).toBe('दिउँसो 1:00'); // 13:00
+    expect(formatTime('2026-11-08T15:15:00Z', 'ne')).toBe('राति 9:00'); // 21:00
+    expect(formatTime('2026-11-08T18:15:00Z', 'ne')).toBe('राति 12:00'); // 00:00
   });
 
   it('formats a pickup window', () => {

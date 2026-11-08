@@ -32,18 +32,21 @@ export function nptParts(value: Date | string): NptParts {
   };
 }
 
-const MERIDIEM: Record<Locale, [string, string]> = {
-  en: ['AM', 'PM'],
-  ne: ['पूर्वाह्न', 'अपराह्न'],
-};
+/** Everyday Nepali part of day, placed before the time. */
+function nepaliDayPart(hour: number): string {
+  if (hour >= 4 && hour < 12) return 'बिहान';
+  if (hour >= 12 && hour < 17) return 'दिउँसो';
+  if (hour >= 17 && hour < 20) return 'साँझ';
+  return 'राति';
+}
 
-/** "5:30 PM" / "५:३० अपराह्न", always in Asia/Kathmandu. */
+/** "5:30 PM" / "साँझ ५:३०", always in Asia/Kathmandu. */
 export function formatTime(value: Date | string, locale: Locale = 'en', digits: Digits = 'latin'): string {
   const { hour, minute } = nptParts(value);
   const h12 = hour % 12 === 0 ? 12 : hour % 12;
   const clock = toDigits(`${h12}:${String(minute).padStart(2, '0')}`, digits);
-  const [am, pm] = MERIDIEM[locale];
-  return `${clock} ${hour < 12 ? am : pm}`;
+  if (locale === 'ne') return `${nepaliDayPart(hour)} ${clock}`;
+  return `${clock} ${hour < 12 ? 'AM' : 'PM'}`;
 }
 
 /** "5:30 PM - 7:00 PM" for a pickup window. */
