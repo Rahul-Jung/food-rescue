@@ -7,7 +7,10 @@
     "ok": "OK",
     "cancel": "Cancel",
     "retry": "Try again",
-    "loading": "Loading…"
+    "loading": "Loading…",
+    "close": "Close",
+    "increase": "Increase",
+    "decrease": "Decrease"
   },
   "settings": {
     "language": "Language",
@@ -45,5 +48,51 @@
     "REVIEW_NOT_ALLOWED": "You can't review this order.",
     "APP_UPDATE_REQUIRED": "Please update the app to continue.",
     "MAINTENANCE": "We're doing maintenance. Please check back soon."
+  },
+  "badges": {
+    "live": "Live",
+    "happyHour": "Happy hour",
+    "soldOut": "Sold out",
+    "paid": "Paid",
+    "collected": "Collected"
+  },
+  "price": {
+    "was": "Was {{price}}",
+    "off": "{{pct}}% off"
+  },
+  "code": {
+    "label": "Pickup code {{code}}"
+  },
+  "countdown": {
+    "left": "{{time}} left",
+    "ended": "Time is up"
+  },
+  "kit": {
+    "title": "Design kit",
+    "digits": "Devanagari digits",
+    "buttonPrimary": "Reserve now",
+    "buttonSecondary": "View on map",
+    "buttonGhost": "Skip for now",
+    "buttonDanger": "Cancel order",
+    "inputLabel": "Phone number",
+    "inputHint": "We will send a 6-digit code",
+    "inputError": "Enter a valid Nepal mobile number",
+    "otpLabel": "6-digit code",
+    "chipVeg": "Veg",
+    "chipBakery": "Bakery",
+    "chipHappyHour": "Happy hour now",
+    "offerTitle": "Surprise bag of fresh momos and bakery items",
+    "vendorName": "Saathi Bakery, Jhamsikhel",
+    "offerMeta": "Pickup 5:30 PM - 7:00 PM · 0.6 km",
+    "emptyTitle": "No offers near you yet",
+    "emptyBody": "Try a bigger radius or check back after 5 PM.",
+    "emptyAction": "Change radius",
+    "openSheet": "Open sheet",
+    "sheetTitle": "Choose quantity",
+    "statEarned": "Available balance",
+    "statOrders": "Orders today",
+    "rowTitle": "Language",
+    "rowSubtitle": "English or Nepali",
+    "rowRight": "English"
   }
 }

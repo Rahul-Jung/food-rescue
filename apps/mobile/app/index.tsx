@@ -1,7 +1,10 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Link } from 'expo-router';
+import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
+import { Button, Text } from '../src/components';
 import { useLanguageStore } from '../src/store/language';
+import { color, space } from '../src/theme';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -10,23 +13,22 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('app.name')}</Text>
-      <Text style={styles.body}>{t('app.tagline')}</Text>
-      <Pressable
-        accessibilityRole="button"
-        style={styles.button}
+      <Text variant="title">{t('app.name')}</Text>
+      <Text>{t('app.tagline')}</Text>
+      <Button
+        variant="secondary"
+        label={t('settings.switchLanguage')}
         onPress={() => setLocale(locale === 'en' ? 'ne' : 'en')}
-      >
-        <Text style={styles.buttonText}>{t('settings.switchLanguage')}</Text>
-      </Pressable>
+      />
+      {__DEV__ ? (
+        <Link href="/dev/kit" asChild>
+          <Button variant="ghost" label={t('kit.title')} />
+        </Link>
+      ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12, backgroundColor: '#FFFFFF' },
-  title: { color: '#000000', fontSize: 20 },
-  body: { color: '#000000', fontSize: 14 },
-  button: { borderWidth: 1, borderColor: '#000000', paddingHorizontal: 16, paddingVertical: 10 },
-  buttonText: { color: '#000000', fontSize: 14 },
+  container: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: space.m, backgroundColor: color.paper },
 });
