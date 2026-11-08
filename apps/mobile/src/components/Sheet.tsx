@@ -38,5 +38,11 @@ const styles = StyleSheet.create({
     padding: space.xl,
     gap: space.l,
   },
-  handle: { alignSelf: 'center', width: 40, height: 4, borderRadius: 2, backgroundColor: color.grey300 },
+  handle: {
+    alignSelf: 'center',
+    width: 40,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: color.grey300,
+  },
 });

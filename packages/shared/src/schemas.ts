@@ -12,7 +12,9 @@ export const positivePaisaSchema = paisaSchema.positive();
 export const timestamptzSchema = z.iso.datetime({ offset: true });
 export const localeSchema = z.enum(['en', 'ne']);
 /** Nepal mobile in E.164: +97798XXXXXXXX or +97797XXXXXXXX. */
-export const npPhoneSchema = z.string().regex(/^\+9779[78]\d{8}$/, 'Nepal mobile in E.164 (+97798…)');
+export const npPhoneSchema = z
+  .string()
+  .regex(/^\+9779[78]\d{8}$/, 'Nepal mobile in E.164 (+97798…)');
 export const basisPointsSchema = z.number().int().min(0).max(5000);
 export const quantitySchema = z.number().int().positive();
 export const latLngSchema = z.object({
@@ -22,14 +24,40 @@ export const latLngSchema = z.object({
 
 export const appRoleSchema = z.enum(['customer', 'vendor', 'admin']);
 export const accountStatusSchema = z.enum(['active', 'suspended', 'deleted']);
-export const vendorTypeSchema = z.enum(['restaurant', 'grocery', 'bakery', 'cafe', 'hotel', 'other']);
-export const vendorStatusSchema = z.enum(['draft', 'submitted', 'approved', 'rejected', 'suspended']);
+export const vendorTypeSchema = z.enum([
+  'restaurant',
+  'grocery',
+  'bakery',
+  'cafe',
+  'hotel',
+  'other',
+]);
+export const vendorStatusSchema = z.enum([
+  'draft',
+  'submitted',
+  'approved',
+  'rejected',
+  'suspended',
+]);
 export const offerKindSchema = z.enum(['surplus', 'happy_hour']);
 export const foodTypeSchema = z.enum(['veg', 'non_veg', 'vegan']);
-export const offerStatusSchema = z.enum(['draft', 'live', 'sold_out', 'expired', 'deactivated', 'deleted']);
+export const offerStatusSchema = z.enum([
+  'draft',
+  'live',
+  'sold_out',
+  'expired',
+  'deactivated',
+  'deleted',
+]);
 export const orderStatusSchema = z.enum(ORDER_STATUSES);
 export const payProviderSchema = z.enum(['esewa', 'khalti']);
-export const paymentStatusSchema = z.enum(['initiated', 'verified', 'failed', 'refunded', 'partially_refunded']);
+export const paymentStatusSchema = z.enum([
+  'initiated',
+  'verified',
+  'failed',
+  'refunded',
+  'partially_refunded',
+]);
 export const refundStatusSchema = z.enum(['requested', 'done', 'failed']);
 export const ledgerTypeSchema = z.enum(['sale', 'commission', 'refund', 'payout', 'adjustment']);
 export const ledgerBucketSchema = z.enum(['pending', 'available', 'paid_out']);

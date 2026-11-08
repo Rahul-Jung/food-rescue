@@ -1,7 +1,15 @@
 import { Text as RNText, type TextProps as RNTextProps } from 'react-native';
 
 import { useLanguageStore } from '../store/language';
-import { color as colors, fontFamily, fontSize, lineHeight, maxFontScale, type FontWeight, type TextVariant } from '../theme';
+import {
+  color as colors,
+  fontFamily,
+  fontSize,
+  lineHeight,
+  maxFontScale,
+  type FontWeight,
+  type TextVariant,
+} from '../theme';
 
 export interface TextProps extends RNTextProps {
   variant?: TextVariant;
@@ -11,9 +19,17 @@ export interface TextProps extends RNTextProps {
 }
 
 /** All app text goes through this so font, size and line height follow the locale. */
-export function Text({ variant = 'body', weight, color = 'ink', strike, style, ...rest }: TextProps) {
+export function Text({
+  variant = 'body',
+  weight,
+  color = 'ink',
+  strike,
+  style,
+  ...rest
+}: TextProps) {
   const locale = useLanguageStore((s) => s.locale);
-  const w: FontWeight = weight ?? (variant === 'button' || variant === 'title' || variant === 'number' ? 600 : 400);
+  const w: FontWeight =
+    weight ?? (variant === 'button' || variant === 'title' || variant === 'number' ? 600 : 400);
   const size = fontSize[variant];
   return (
     <RNText

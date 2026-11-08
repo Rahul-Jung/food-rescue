@@ -48,8 +48,12 @@ const problems: string[] = [];
 
 for (const key of en.keys()) if (!ne.has(key)) problems.push(`missing in ne.json: ${key}`);
 for (const key of ne.keys()) if (!en.has(key)) problems.push(`missing in en.json: ${key}`);
-for (const [lang, map] of [['en', en], ['ne', ne]] as const) {
-  for (const [key, value] of map) if (value.trim() === '') problems.push(`empty in ${lang}.json: ${key}`);
+for (const [lang, map] of [
+  ['en', en],
+  ['ne', ne],
+] as const) {
+  for (const [key, value] of map)
+    if (value.trim() === '') problems.push(`empty in ${lang}.json: ${key}`);
 }
 
 for (const code of [...ERROR_CODES, UNKNOWN_ERROR]) {
@@ -60,7 +64,8 @@ const usage = /\bt\(\s*['"`]([\w.-]+)['"`]/g;
 for (const file of sourceDirs.flatMap((d) => walk(d))) {
   for (const match of readFileSync(file, 'utf8').matchAll(usage)) {
     const key = match[1];
-    if (key && !en.has(key)) problems.push(`used but not in en.json: ${key} (${file.slice(root.length + 1)})`);
+    if (key && !en.has(key))
+      problems.push(`used but not in en.json: ${key} (${file.slice(root.length + 1)})`);
   }
 }
 

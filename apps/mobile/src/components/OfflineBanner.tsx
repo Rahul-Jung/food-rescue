@@ -7,13 +7,17 @@ import { color, space } from '../theme';
 import { Text } from './Text';
 
 /** Shown at the top whenever the phone has no connection; screens keep showing cached data. */
-export function OfflineBanner() {
+export function OfflineBanner({ preview = false }: { preview?: boolean }) {
   const { t } = useTranslation();
   const { isConnected } = useNetInfo();
   const insets = useSafeAreaInsets();
-  if (isConnected !== false) return null;
+  if (!preview && isConnected !== false) return null;
   return (
-    <View accessibilityRole="alert" accessibilityLiveRegion="polite" style={[styles.bar, { paddingTop: insets.top + space.s }]}>
+    <View
+      accessibilityRole="alert"
+      accessibilityLiveRegion="polite"
+      style={[styles.bar, { paddingTop: (preview ? 0 : insets.top) + space.s }]}
+    >
       <Text variant="body" weight={600} color="paper">
         {`⚠ ${t('system.offline')}`}
       </Text>

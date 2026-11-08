@@ -22,7 +22,9 @@ export function EmptyState({ title, body, actionLabel, onAction }: EmptyStatePro
           {body}
         </Text>
       ) : null}
-      {actionLabel && onAction ? <Button variant="secondary" label={actionLabel} onPress={onAction} /> : null}
+      {actionLabel && onAction ? (
+        <Button variant="secondary" label={actionLabel} onPress={onAction} />
+      ) : null}
     </View>
   );
 }

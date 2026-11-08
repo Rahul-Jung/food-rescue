@@ -15,6 +15,7 @@ import {
   Input,
   ListRow,
   OfferCard,
+  OfflineBanner,
   OtpInput,
   PriceTag,
   Sheet,
@@ -60,7 +61,10 @@ export default function Kit() {
       <ScrollView contentContainerStyle={styles.content}>
         <Text variant="title">{t('kit.title')}</Text>
         <View style={styles.row}>
-          <Button label={t('settings.switchLanguage')} onPress={() => setLocale(locale === 'en' ? 'ne' : 'en')} />
+          <Button
+            label={t('settings.switchLanguage')}
+            onPress={() => setLocale(locale === 'en' ? 'ne' : 'en')}
+          />
           <Chip
             label={t('kit.digits')}
             selected={digits === 'devanagari'}
@@ -88,7 +92,12 @@ export default function Kit() {
         </Section>
 
         <Section name="Input">
-          <Input label={t('kit.inputLabel')} hint={t('kit.inputHint')} placeholder="+977 98…" keyboardType="phone-pad" />
+          <Input
+            label={t('kit.inputLabel')}
+            hint={t('kit.inputHint')}
+            placeholder="+977 98…"
+            keyboardType="phone-pad"
+          />
           <Input label={t('kit.inputLabel')} error={t('kit.inputError')} defaultValue="98123" />
         </Section>
 
@@ -168,11 +177,20 @@ export default function Kit() {
         </Section>
 
         <Section name="ListRow">
-          <ListRow title={t('kit.rowTitle')} subtitle={t('kit.rowSubtitle')} right={t('kit.rowRight')} onPress={() => undefined} />
+          <ListRow
+            title={t('kit.rowTitle')}
+            subtitle={t('kit.rowSubtitle')}
+            right={t('kit.rowRight')}
+            onPress={() => undefined}
+          />
         </Section>
 
         <Section name="Countdown">
           <Countdown until={until} />
+        </Section>
+
+        <Section name="OfflineBanner (preview)">
+          <OfflineBanner preview />
         </Section>
 
         <Section name="Error boundary + Sentry">

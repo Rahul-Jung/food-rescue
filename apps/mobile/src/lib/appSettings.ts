@@ -14,7 +14,9 @@ export function useAppSettings() {
     queryFn: async (): Promise<PublicSettings> => {
       const { data, error } = await supabase.from('app_settings_public').select('key, value');
       if (error) throw error;
-      return Object.fromEntries((data ?? []).map((r: { key: string; value: unknown }) => [r.key, r.value]));
+      return Object.fromEntries(
+        (data ?? []).map((r: { key: string; value: unknown }) => [r.key, r.value]),
+      );
     },
     staleTime: 5 * 60_000,
   });

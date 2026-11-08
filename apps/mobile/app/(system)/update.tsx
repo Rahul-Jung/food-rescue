@@ -24,6 +24,12 @@ export default function UpdateRequired() {
 }
 
 const styles = StyleSheet.create({
-  wrap: { flex: 1, justifyContent: 'center', padding: space.xl, gap: space.l, backgroundColor: color.paper },
+  wrap: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: space.xl,
+    gap: space.l,
+    backgroundColor: color.paper,
+  },
   center: { textAlign: 'center' },
 });

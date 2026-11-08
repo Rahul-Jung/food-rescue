@@ -18,7 +18,11 @@ export function Stepper({ value, onChange, min = 1, max }: StepperProps) {
   const digits = useLanguageStore((s) => s.digits);
   const step = (d: number) => onChange(Math.min(max, Math.max(min, value + d)));
   return (
-    <View style={styles.row} accessibilityRole="adjustable" accessibilityValue={{ min, max, now: value }}>
+    <View
+      style={styles.row}
+      accessibilityRole="adjustable"
+      accessibilityValue={{ min, max, now: value }}
+    >
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={t('common.decrease')}

@@ -19,7 +19,13 @@ export function Badge({ kind }: { kind: BadgeKind }) {
   const { t } = useTranslation();
   const filled = kind === 'live' || kind === 'paid';
   return (
-    <View style={[styles.badge, filled ? styles.filled : styles.outline, kind === 'soldOut' && styles.dashed]}>
+    <View
+      style={[
+        styles.badge,
+        filled ? styles.filled : styles.outline,
+        kind === 'soldOut' && styles.dashed,
+      ]}
+    >
       <Text variant="caption" weight={600} color={filled ? 'paper' : 'ink'}>
         {`${ICON[kind]} ${t(`badges.${kind}`)}`}
       </Text>

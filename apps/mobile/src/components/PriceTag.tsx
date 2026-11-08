@@ -18,7 +18,9 @@ export function PriceTag({ pricePaisa, originalPaisa }: PriceTagProps) {
   const digits = useLanguageStore((s) => s.digits);
   const fmt = (p: number) => formatPrice(p, locale, digits);
   const pct =
-    originalPaisa && originalPaisa > pricePaisa ? Math.round(100 - (pricePaisa * 100) / originalPaisa) : null;
+    originalPaisa && originalPaisa > pricePaisa
+      ? Math.round(100 - (pricePaisa * 100) / originalPaisa)
+      : null;
 
   return (
     <View style={styles.row}>

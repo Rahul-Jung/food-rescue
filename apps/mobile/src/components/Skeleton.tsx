@@ -4,7 +4,13 @@ import { useTranslation } from 'react-i18next';
 
 import { color, radius } from '../theme';
 
-export function Skeleton({ width = '100%', height = 16 }: { width?: DimensionValue; height?: number }) {
+export function Skeleton({
+  width = '100%',
+  height = 16,
+}: {
+  width?: DimensionValue;
+  height?: number;
+}) {
   const { t } = useTranslation();
   const opacity = useRef(new Animated.Value(1)).current;
   useEffect(() => {

@@ -8,8 +8,12 @@ export const dynamic = 'force-dynamic';
 /** Skeleton home: proves the admin reaches Supabase by reading app_settings_public. */
 export default async function Home() {
   const supabase = supabaseServer();
-  const result = supabase ? await supabase.from('app_settings_public').select('key, value').order('key') : null;
-  const host = process.env.NEXT_PUBLIC_SUPABASE_URL ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).host : 'not set';
+  const result = supabase
+    ? await supabase.from('app_settings_public').select('key, value').order('key')
+    : null;
+  const host = process.env.NEXT_PUBLIC_SUPABASE_URL
+    ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).host
+    : 'not set';
   const minWithdrawal = result?.data?.find((r) => r.key === 'min_withdrawal_paisa')?.value;
 
   return (
@@ -20,7 +24,9 @@ export default async function Home() {
           Supabase: <span className="font-semibold">{host}</span>
         </p>
         {!supabase ? (
-          <p className="mt-2">⚠ Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local</p>
+          <p className="mt-2">
+            ⚠ Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local
+          </p>
         ) : result?.error ? (
           <p className="mt-2">⚠ Could not read settings: {result.error.message}</p>
         ) : (
