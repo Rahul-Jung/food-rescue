@@ -4,5 +4,6 @@ export type { Database, Json, Tables, TablesInsert, TablesUpdate, Enums } from '
 import type { Database } from './database';
 
 export type AppSettingRow = Database['public']['Tables']['app_settings']['Row'];
+export type ProfileRow = Database['public']['Tables']['profiles']['Row'];
 export type AuditLogRow = Database['public']['Tables']['audit_log']['Row'];
 export type OrderStatusEnum = Database['public']['Enums']['order_status'];
