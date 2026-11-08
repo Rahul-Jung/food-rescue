@@ -93,6 +93,13 @@
     "statOrders": "Orders today",
     "rowTitle": "Language",
     "rowSubtitle": "English or Nepali",
-    "rowRight": "English"
+    "rowRight": "English",
+    "throwError": "Throw a test error"
+  },
+  "system": {
+    "offline": "You are offline. Showing saved data.",
+    "updateTitle": "Update needed",
+    "updateButton": "Update now",
+    "maintenanceTitle": "Back soon"
   }
 }

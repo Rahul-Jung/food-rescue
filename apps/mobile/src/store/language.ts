@@ -1,5 +1,8 @@
 import { getLocales } from 'expo-localization';
 import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
+
+import { appStringStorage } from '../lib/storage';
 
 export type Locale = 'en' | 'ne';
 export type Digits = 'latin' | 'devanagari';
@@ -16,10 +19,15 @@ interface LanguageState {
   setDigits: (digits: Digits) => void;
 }
 
-// In memory for now; persisted with MMKV in T1.7.
-export const useLanguageStore = create<LanguageState>((set) => ({
-  locale: deviceLocale(),
-  digits: 'latin',
-  setLocale: (locale) => set({ locale }),
-  setDigits: (digits) => set({ digits }),
-}));
+// Saved in MMKV so the choice survives restarts (synced to profiles.locale in T2.x).
+export const useLanguageStore = create<LanguageState>()(
+  persist(
+    (set) => ({
+      locale: deviceLocale(),
+      digits: 'latin',
+      setLocale: (locale) => set({ locale }),
+      setDigits: (digits) => set({ digits }),
+    }),
+    { name: 'language', storage: createJSONStorage(() => appStringStorage) },
+  ),
+);

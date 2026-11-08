@@ -8,6 +8,7 @@ export * from './EmptyState';
 export * from './Input';
 export * from './ListRow';
 export * from './OfferCard';
+export * from './OfflineBanner';
 export * from './OtpInput';
 export * from './PriceTag';
 export * from './Sheet';

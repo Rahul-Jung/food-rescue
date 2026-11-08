@@ -17,7 +17,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ios: {
     bundleIdentifier: `np.foodrescue.app${suffix}`,
   },
-  plugins: ['expo-router', 'expo-dev-client'],
+  plugins: ['expo-router', 'expo-dev-client', 'expo-secure-store', '@sentry/react-native/expo'],
   experiments: { typedRoutes: true },
   owner: 'kairo10',
   extra: {

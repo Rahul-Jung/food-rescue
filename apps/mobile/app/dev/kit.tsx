@@ -37,6 +37,11 @@ function Section({ name, children }: { name: string; children: ReactNode }) {
   );
 }
 
+/** Throws during render so the root error boundary catches it and Sentry records it. */
+function Crash(): never {
+  throw new Error('Design kit test error (T1.7 Sentry check)');
+}
+
 /** Dev-only storybook-style screen: every design kit component, in en and ne. */
 export default function Kit() {
   const { t } = useTranslation();
@@ -45,6 +50,7 @@ export default function Kit() {
   const [qty, setQty] = useState(1);
   const [chip, setChip] = useState(true);
   const [sheet, setSheet] = useState(false);
+  const [crash, setCrash] = useState(false);
   const until = useMemo(() => new Date(Date.now() + 10 * 60_000), []);
 
   if (!__DEV__) return <Redirect href="/" />;
@@ -167,6 +173,11 @@ export default function Kit() {
 
         <Section name="Countdown">
           <Countdown until={until} />
+        </Section>
+
+        <Section name="Error boundary + Sentry">
+          <Button variant="danger" label={t('kit.throwError')} onPress={() => setCrash(true)} />
+          {crash ? <Crash /> : null}
         </Section>
       </ScrollView>
     </SafeAreaView>
