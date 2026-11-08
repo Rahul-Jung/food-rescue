@@ -1,0 +1,105 @@
+{
+  "app": {
+    "name": "Food Rescue",
+    "tagline": "Good food, saved from waste"
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "retry": "Try again",
+    "loading": "Loading…",
+    "close": "Close",
+    "increase": "Increase",
+    "decrease": "Decrease"
+  },
+  "settings": {
+    "language": "Language",
+    "switchLanguage": "नेपालीमा हेर्नुहोस्",
+    "languageName": "English"
+  },
+  "auth": {},
+  "offers": {},
+  "orders": {},
+  "wallet": {},
+  "errors": {
+    "UNKNOWN": "Something went wrong. Please try again.",
+    "NOT_AUTHENTICATED": "Please log in to continue.",
+    "FORBIDDEN": "You don't have access to this.",
+    "ACCOUNT_SUSPENDED": "Your account is suspended. Please contact support.",
+    "VALIDATION_FAILED": "Please check the highlighted fields.",
+    "VENDOR_NOT_APPROVED": "Your business is not approved yet.",
+    "OFFER_UNAVAILABLE": "This offer is no longer available.",
+    "QUANTITY_EXCEEDED": "Not enough left for that quantity.",
+    "STALE_VERSION": "This offer was changed on another device. Please reload.",
+    "RATE_LIMITED": "Too many tries. Please wait a moment.",
+    "HOLD_EXPIRED": "Your 10-minute hold ran out and the item sold out.",
+    "PAYMENT_NOT_VERIFIED": "We couldn't confirm your payment.",
+    "AMOUNT_MISMATCH": "The paid amount didn't match. Please contact support.",
+    "CODE_INVALID": "That pickup code is not correct.",
+    "CODE_LOCKED": "Too many wrong codes. Try again in a few minutes.",
+    "OUTSIDE_PICKUP_WINDOW": "This is outside the pickup time.",
+    "ALREADY_COLLECTED": "This order was already collected.",
+    "CANCEL_WINDOW_PASSED": "It's less than 1 hour before pickup, so this order can't be cancelled for a refund.",
+    "OPEN_ORDERS_EXIST": "There are open orders. Finish them first.",
+    "BELOW_MIN_WITHDRAWAL": "The minimum withdrawal is Rs. 500.",
+    "INSUFFICIENT_BALANCE": "Your available balance is too low.",
+    "OPEN_WITHDRAWAL_EXISTS": "You already have a withdrawal in progress.",
+    "PAYOUT_ACCOUNT_MISSING": "Add a payout account first.",
+    "REVIEW_NOT_ALLOWED": "You can't review this order.",
+    "APP_UPDATE_REQUIRED": "Please update the app to continue.",
+    "MAINTENANCE": "We're doing maintenance. Please check back soon."
+  },
+  "badges": {
+    "live": "Live",
+    "happyHour": "Happy hour",
+    "soldOut": "Sold out",
+    "paid": "Paid",
+    "collected": "Collected"
+  },
+  "price": {
+    "was": "Was {{price}}",
+    "off": "{{pct}}% off"
+  },
+  "code": {
+    "label": "Pickup code {{code}}"
+  },
+  "countdown": {
+    "left": "{{time}} left",
+    "ended": "Time is up"
+  },
+  "kit": {
+    "title": "Design kit",
+    "digits": "Devanagari digits",
+    "buttonPrimary": "Reserve now",
+    "buttonSecondary": "View on map",
+    "buttonGhost": "Skip for now",
+    "buttonDanger": "Cancel order",
+    "inputLabel": "Phone number",
+    "inputHint": "We will send a 6-digit code",
+    "inputError": "Enter a valid Nepal mobile number",
+    "otpLabel": "6-digit code",
+    "chipVeg": "Veg",
+    "chipBakery": "Bakery",
+    "chipHappyHour": "Happy hour now",
+    "offerTitle": "Surprise bag of fresh momos and bakery items",
+    "vendorName": "Saathi Bakery, Jhamsikhel",
+    "offerMeta": "Pickup 5:30 PM - 7:00 PM · 0.6 km",
+    "emptyTitle": "No offers near you yet",
+    "emptyBody": "Try a bigger radius or check back after 5 PM.",
+    "emptyAction": "Change radius",
+    "openSheet": "Open sheet",
+    "sheetTitle": "Choose quantity",
+    "statEarned": "Available balance",
+    "statOrders": "Orders today",
+    "rowTitle": "Language",
+    "rowSubtitle": "English or Nepali",
+    "rowRight": "English",
+    "throwError": "Throw a test error"
+  },
+  "system": {
+    "offline": "You are offline. Showing saved data.",
+    "updateTitle": "Update needed",
+    "updateButton": "Update now",
+    "maintenanceTitle": "Back soon"
+  }
+}

@@ -8,7 +8,8 @@
   "scripts": {
     "typecheck": "pnpm -r --if-present run typecheck",
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
-    "test": "pnpm -r --if-present run test",
+    "test": "pnpm -r --if-present run test && pnpm check:i18n",
+    "check:i18n": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-i18n.ts",
     "format": "prettier --write ."
   },
   "devDependencies": {
@@ -17,6 +18,7 @@
     "eslint": "8.57.1",
     "eslint-config-prettier": "9.1.0",
     "prettier": "3.3.3",
+    "supabase": "3.0.0",
     "typescript": "5.6.3"
   }
 }
