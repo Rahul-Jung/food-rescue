@@ -1,4 +1,4 @@
-import '../src/lib/i18n';
+import i18n from '../src/lib/i18n';
 
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { useFonts } from 'expo-font';
@@ -6,7 +6,7 @@ import { Redirect, Stack, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { PostHogProvider } from 'posthog-react-native';
 import type { ReactNode } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
@@ -45,19 +45,32 @@ function SystemGate({ children }: { children: ReactNode }) {
 function Analytics({ children }: { children: ReactNode }) {
   if (!posthog) return children;
   return (
-    <PostHogProvider client={posthog} autocapture={{ captureScreens: false, captureTouches: false }}>
+    <PostHogProvider
+      client={posthog}
+      autocapture={{ captureScreens: false, captureTouches: false }}
+    >
       {children}
     </PostHogProvider>
   );
 }
 
 function RootLayout() {
-  const [fontsLoaded] = useFonts(fontAssets);
-  if (!fontsLoaded) return null;
+  const [fontsLoaded, fontError] = useFonts(fontAssets);
+  // Drawn loading state instead of a blank screen; on a font error, carry on with system fonts.
+  if (!fontsLoaded && !fontError) {
+    return (
+      <View style={styles.loading} accessibilityLabel={i18n.t('common.loading')}>
+        <ActivityIndicator color={color.ink} size="large" />
+      </View>
+    );
+  }
   return (
     <SafeAreaProvider>
       <Sentry.ErrorBoundary fallback={({ resetError }) => <CrashScreen resetError={resetError} />}>
-        <PersistQueryClientProvider client={queryClient} persistOptions={{ persister: queryPersister }}>
+        <PersistQueryClientProvider
+          client={queryClient}
+          persistOptions={{ persister: queryPersister }}
+        >
           <Analytics>
             <StatusBar style="dark" />
             <OfflineBanner />
@@ -74,6 +87,18 @@ function RootLayout() {
 export default Sentry.wrap(RootLayout);
 
 const styles = StyleSheet.create({
-  crash: { flex: 1, justifyContent: 'center', padding: space.xl, gap: space.l, backgroundColor: color.paper },
+  loading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: color.paper,
+  },
+  crash: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: space.xl,
+    gap: space.l,
+    backgroundColor: color.paper,
+  },
   center: { textAlign: 'center' },
 });

@@ -16,7 +16,10 @@ export const queryClient = new QueryClient({
 });
 
 /** Cache survives restarts, so screens show saved data when offline. */
-export const queryPersister = createSyncStoragePersister({ storage: appStringStorage, key: 'query-cache' });
+export const queryPersister = createSyncStoragePersister({
+  storage: appStringStorage,
+  key: 'query-cache',
+});
 
 // Pause and resume queries with the real network state.
 onlineManager.setEventListener((setOnline) =>

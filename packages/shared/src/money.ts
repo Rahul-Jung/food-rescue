@@ -25,7 +25,11 @@ function groupRupees(rupees: number): string {
  * Format integer paisa as a price: "Rs. 250", "Rs. 1,250.50", "रू. २५०".
  * Paisa are shown only when non-zero. Latin digits by default.
  */
-export function formatPrice(paisa: number, locale: Locale = 'en', digits: Digits = 'latin'): string {
+export function formatPrice(
+  paisa: number,
+  locale: Locale = 'en',
+  digits: Digits = 'latin',
+): string {
   if (!Number.isSafeInteger(paisa)) throw new RangeError('paisa must be an integer');
   const sign = paisa < 0 ? '-' : '';
   const abs = Math.abs(paisa);

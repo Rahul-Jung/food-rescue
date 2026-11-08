@@ -14,12 +14,23 @@ export default function Maintenance() {
         {t('system.maintenanceTitle')}
       </Text>
       <Text style={styles.center}>{t('errors.MAINTENANCE')}</Text>
-      <Button variant="secondary" label={t('common.retry')} loading={isFetching} onPress={() => void refetch()} />
+      <Button
+        variant="secondary"
+        label={t('common.retry')}
+        loading={isFetching}
+        onPress={() => void refetch()}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  wrap: { flex: 1, justifyContent: 'center', padding: space.xl, gap: space.l, backgroundColor: color.paper },
+  wrap: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: space.xl,
+    gap: space.l,
+    backgroundColor: color.paper,
+  },
   center: { textAlign: 'center' },
 });

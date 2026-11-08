@@ -1,4 +1,7 @@
 begin;
+-- pgtap is created here as well as in 0001, so tests still run where the
+-- production post-deploy step has dropped it (see supabase/production-post-deploy.sql).
+create extension if not exists pgtap with schema extensions;
 select plan(15);
 
 -- Extensions

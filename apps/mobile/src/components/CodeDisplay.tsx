@@ -20,7 +20,10 @@ export function CodeDisplay({ code, size = 160 }: { code: string; size?: number 
   const px = Math.floor(size / (matrix.n + 2));
 
   return (
-    <View style={styles.wrap} accessibilityLabel={t('code.label', { code: code.split('').join(' ') })}>
+    <View
+      style={styles.wrap}
+      accessibilityLabel={t('code.label', { code: code.split('').join(' ') })}
+    >
       <Text variant="number" style={styles.code}>
         {toDigits(code.replace(/(\d{3})(\d{3})/, '$1 $2'), digits)}
       </Text>
@@ -30,7 +33,11 @@ export function CodeDisplay({ code, size = 160 }: { code: string; size?: number 
             {Array.from({ length: matrix.n }, (_, c) => (
               <View
                 key={c}
-                style={{ width: px, height: px, backgroundColor: matrix.cell(r, c) ? color.ink : color.paper }}
+                style={{
+                  width: px,
+                  height: px,
+                  backgroundColor: matrix.cell(r, c) ? color.ink : color.paper,
+                }}
               />
             ))}
           </View>

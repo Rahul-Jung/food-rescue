@@ -1,7 +1,13 @@
 /** Compare "1.2.10" style versions: -1 if a < b, 0 if equal, 1 if a > b. Missing parts count as 0. */
 export function compareVersions(a: string, b: string): -1 | 0 | 1 {
-  const pa = a.trim().split('.').map((p) => parseInt(p, 10) || 0);
-  const pb = b.trim().split('.').map((p) => parseInt(p, 10) || 0);
+  const pa = a
+    .trim()
+    .split('.')
+    .map((p) => parseInt(p, 10) || 0);
+  const pb = b
+    .trim()
+    .split('.')
+    .map((p) => parseInt(p, 10) || 0);
   for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
     const x = pa[i] ?? 0;
     const y = pb[i] ?? 0;

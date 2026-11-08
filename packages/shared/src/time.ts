@@ -41,7 +41,11 @@ function nepaliDayPart(hour: number): string {
 }
 
 /** "5:30 PM" / "साँझ ५:३०", always in Asia/Kathmandu. */
-export function formatTime(value: Date | string, locale: Locale = 'en', digits: Digits = 'latin'): string {
+export function formatTime(
+  value: Date | string,
+  locale: Locale = 'en',
+  digits: Digits = 'latin',
+): string {
   const { hour, minute } = nptParts(value);
   const h12 = hour % 12 === 0 ? 12 : hour % 12;
   const clock = toDigits(`${h12}:${String(minute).padStart(2, '0')}`, digits);

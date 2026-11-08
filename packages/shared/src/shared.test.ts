@@ -29,7 +29,9 @@ describe('errors', () => {
 
   it('never leaks raw database messages', () => {
     expect(toAppError({ message: 'HOLD_EXPIRED' }).code).toBe('HOLD_EXPIRED');
-    expect(toAppError({ message: 'duplicate key value violates unique constraint' }).code).toBe('UNKNOWN');
+    expect(toAppError({ message: 'duplicate key value violates unique constraint' }).code).toBe(
+      'UNKNOWN',
+    );
     expect(toAppError(new AppError('FORBIDDEN')).code).toBe('FORBIDDEN');
     expect(isErrorCode('NOPE')).toBe(false);
   });

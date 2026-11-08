@@ -10,7 +10,9 @@
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
     "test": "pnpm -r --if-present run test && pnpm check:i18n",
     "check:i18n": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-i18n.ts",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "gen:types": "bash scripts/gen-types.sh",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "7.18.0",

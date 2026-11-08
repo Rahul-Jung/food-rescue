@@ -7,7 +7,13 @@ describe('NPT times (UTC+05:45)', () => {
 
   it('rolls over the date at NPT midnight', () => {
     // 18:15 UTC on the 8th = 00:00 NPT on the 9th
-    expect(nptParts('2026-11-08T18:15:00Z')).toMatchObject({ year: 2026, month: 11, day: 9, hour: 0, minute: 0 });
+    expect(nptParts('2026-11-08T18:15:00Z')).toMatchObject({
+      year: 2026,
+      month: 11,
+      day: 9,
+      hour: 0,
+      minute: 0,
+    });
     expect(nptParts('2026-11-08T18:14:00Z')).toMatchObject({ day: 8, hour: 23, minute: 59 });
   });
 
@@ -36,7 +42,9 @@ describe('NPT times (UTC+05:45)', () => {
   });
 
   it('formats a pickup window', () => {
-    expect(formatTimeRange('2026-11-08T11:45:00Z', '2026-11-08T13:15:00Z')).toBe('5:30 PM - 7:00 PM');
+    expect(formatTimeRange('2026-11-08T11:45:00Z', '2026-11-08T13:15:00Z')).toBe(
+      '5:30 PM - 7:00 PM',
+    );
   });
 
   it('rejects an invalid date', () => {

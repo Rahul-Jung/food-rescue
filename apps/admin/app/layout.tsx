@@ -8,7 +8,18 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const NAV = ['Vendors', 'Customers', 'Orders', 'Accounting', 'Payouts', 'Refunds', 'Reviews', 'Featured', 'Settings', 'Audit'];
+const NAV = [
+  'Vendors',
+  'Customers',
+  'Orders',
+  'Accounting',
+  'Payouts',
+  'Refunds',
+  'Reviews',
+  'Featured',
+  'Settings',
+  'Audit',
+];
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -19,7 +30,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <p className="mb-6 text-lg font-semibold">Food Rescue Admin</p>
             <ul className="space-y-1 text-sm">
               {NAV.map((item) => (
-                <li key={item} className="rounded-box px-2 py-2 text-grey-500" title="Built in a later task">
+                <li
+                  key={item}
+                  className="rounded-box px-2 py-2 text-grey-500"
+                  title="Built in a later task"
+                >
                   {item}
                 </li>
               ))}

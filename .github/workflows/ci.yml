@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   app:
-    name: Typecheck, lint, Jest, i18n
+    name: Typecheck, lint, format, Jest, i18n
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -24,6 +24,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
       - run: pnpm lint
+      - run: pnpm format:check
       # Jest for every package, then scripts/check-i18n.ts (fails on a missing key)
       - run: pnpm test
 

@@ -59,7 +59,9 @@ export function errorMessageKey(code: ErrorCode | typeof UNKNOWN_ERROR): string 
 export function toAppError(err: unknown): AppError {
   if (err instanceof AppError) return err;
   const message =
-    typeof err === 'object' && err !== null && 'message' in err ? String((err as { message: unknown }).message) : '';
+    typeof err === 'object' && err !== null && 'message' in err
+      ? String((err as { message: unknown }).message)
+      : '';
   const code = message.trim();
   return new AppError(isErrorCode(code) ? code : UNKNOWN_ERROR);
 }

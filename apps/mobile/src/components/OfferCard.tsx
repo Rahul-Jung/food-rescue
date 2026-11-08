@@ -17,7 +17,15 @@ export interface OfferCardProps {
   onPress?: () => void;
 }
 
-export function OfferCard({ title, vendorName, meta, pricePaisa, originalPaisa, badges = [], onPress }: OfferCardProps) {
+export function OfferCard({
+  title,
+  vendorName,
+  meta,
+  pricePaisa,
+  originalPaisa,
+  badges = [],
+  onPress,
+}: OfferCardProps) {
   return (
     <Card onPress={onPress} accessibilityLabel={`${title}, ${vendorName}`}>
       {badges.length ? (
