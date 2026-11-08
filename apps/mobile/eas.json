@@ -16,6 +16,7 @@
       }
     },
     "staging": {
+      "environment": "preview",
       "distribution": "internal",
       "android": {
         "buildType": "apk"
