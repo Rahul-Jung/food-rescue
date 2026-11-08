@@ -1,0 +1,20 @@
+@import 'tailwindcss';
+
+/* Same black-and-white tokens as the mobile design kit (plan section 9). */
+@theme {
+  --color-ink: #000000;
+  --color-paper: #ffffff;
+  --color-grey-700: #404040;
+  --color-grey-500: #737373;
+  --color-grey-300: #d4d4d4;
+  --color-grey-100: #f5f5f5;
+  --color-accent: #000000;
+  --radius-box: 8px;
+  --font-sans: 'Noto Sans', 'Noto Sans Devanagari', system-ui, sans-serif;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}

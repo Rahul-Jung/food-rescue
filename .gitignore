@@ -11,3 +11,5 @@ supabase/.branches/
 backups/
 android/
 ios/
+next-env.d.ts
+*.tsbuildinfo
