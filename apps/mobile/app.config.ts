@@ -19,5 +19,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   plugins: ['expo-router', 'expo-dev-client'],
   experiments: { typedRoutes: true },
-  extra: { appEnv: APP_ENV },
+  owner: 'kairo10',
+  extra: {
+    appEnv: APP_ENV,
+    eas: { projectId: 'e80a4eed-9496-406f-a02a-2dfd24f89a65' },
+  },
 });
