@@ -33,7 +33,15 @@ export type Database = {
           updated_by?: string | null;
           value?: Json;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: 'app_settings_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       audit_log: {
         Row: {
@@ -77,6 +85,45 @@ export type Database = {
         };
         Relationships: [];
       };
+      profiles: {
+        Row: {
+          avatar_url: string | null;
+          created_at: string;
+          deleted_at: string | null;
+          email: string | null;
+          full_name: string | null;
+          id: string;
+          locale: string;
+          phone: string | null;
+          role: Database['public']['Enums']['app_role'];
+          status: Database['public']['Enums']['account_status'];
+        };
+        Insert: {
+          avatar_url?: string | null;
+          created_at?: string;
+          deleted_at?: string | null;
+          email?: string | null;
+          full_name?: string | null;
+          id: string;
+          locale?: string;
+          phone?: string | null;
+          role?: Database['public']['Enums']['app_role'];
+          status?: Database['public']['Enums']['account_status'];
+        };
+        Update: {
+          avatar_url?: string | null;
+          created_at?: string;
+          deleted_at?: string | null;
+          email?: string | null;
+          full_name?: string | null;
+          id?: string;
+          locale?: string;
+          phone?: string | null;
+          role?: Database['public']['Enums']['app_role'];
+          status?: Database['public']['Enums']['account_status'];
+        };
+        Relationships: [];
+      };
     };
     Views: {
       app_settings_public: {
@@ -97,6 +144,7 @@ export type Database = {
     };
     Functions: {
       app_setting: { Args: { p_key: string }; Returns: Json };
+      custom_access_token_hook: { Args: { event: Json }; Returns: Json };
       now_npt: { Args: never; Returns: string };
     };
     Enums: {
