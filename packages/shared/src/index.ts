@@ -6,3 +6,4 @@ export * from './orderStates';
 export * from './errors';
 export * from './schemas';
 export * from './version';
+export * from './auth';

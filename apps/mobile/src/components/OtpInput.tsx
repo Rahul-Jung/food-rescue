@@ -25,6 +25,7 @@ export function OtpInput({ value, onChange, length = 6, accessibilityLabel }: Ot
       </View>
       <TextInput
         ref={ref}
+        testID="otp-input"
         value={value}
         onChangeText={(t) => onChange(t.replace(/\D/g, '').slice(0, length))}
         keyboardType="number-pad"

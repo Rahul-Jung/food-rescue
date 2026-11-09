@@ -17,7 +17,22 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ios: {
     bundleIdentifier: `np.foodrescue.app${suffix}`,
   },
-  plugins: ['expo-router', 'expo-dev-client', 'expo-secure-store', '@sentry/react-native/expo'],
+  plugins: [
+    'expo-router',
+    'expo-dev-client',
+    'expo-secure-store',
+    '@sentry/react-native/expo',
+    [
+      'expo-location',
+      {
+        // C-05: foreground only; used per search and never stored.
+        locationWhenInUsePermission:
+          'Food Rescue uses your location only to show food offers near you. It is never saved.',
+        isAndroidBackgroundLocationEnabled: false,
+        isIosBackgroundLocationEnabled: false,
+      },
+    ],
+  ],
   experiments: { typedRoutes: true },
   owner: 'kairo10',
   extra: {
