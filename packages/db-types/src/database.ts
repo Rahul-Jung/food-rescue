@@ -145,6 +145,8 @@ export type Database = {
     Functions: {
       app_setting: { Args: { p_key: string }; Returns: Json };
       custom_access_token_hook: { Args: { event: Json }; Returns: Json };
+      jwt_is_active: { Args: never; Returns: boolean };
+      jwt_is_admin: { Args: never; Returns: boolean };
       now_npt: { Args: never; Returns: string };
     };
     Enums: {
