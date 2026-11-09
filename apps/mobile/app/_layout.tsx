@@ -11,7 +11,11 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
 import { Button, OfflineBanner, Text } from '../src/components';
+import { allowedAuthScreens, authStep } from '../src/features/auth/gate';
+import { useAuthSession } from '../src/features/auth/useAuthSession';
 import { posthog } from '../src/lib/analytics';
+import { useOnboardingStore } from '../src/store/onboarding';
+import { useSessionStore } from '../src/store/session';
 import { systemGate, useAppSettings } from '../src/lib/appSettings';
 import { queryClient, queryPersister } from '../src/lib/queryClient';
 import { initSentry, Sentry } from '../src/lib/sentry';
@@ -40,6 +44,33 @@ function SystemGate({ children }: { children: ReactNode }) {
   if (gate && !inSystem) return <Redirect href={gate === 'update' ? '/update' : '/maintenance'} />;
   if (!gate && inSystem) return <Redirect href="/" />;
   return children;
+}
+
+/** Splash routing: language (first launch) -> intro (once) -> login -> location -> app. */
+function AuthGate({ children }: { children: ReactNode }) {
+  useAuthSession();
+  const segments = useSegments() as string[];
+  const ready = useSessionStore((s) => s.ready);
+  const signedIn = useSessionStore((s) => s.session !== null);
+  const onboarding = useOnboardingStore();
+
+  if (!ready) {
+    return (
+      <View style={styles.loading} accessibilityLabel={i18n.t('common.loading')}>
+        <ActivityIndicator color={color.ink} size="large" />
+      </View>
+    );
+  }
+
+  const step = authStep({ ...onboarding, signedIn });
+  const [group, screen = 'index'] = segments;
+  if (group === '(system)' || (__DEV__ && group === 'dev')) return children;
+
+  if (step === 'app') {
+    return group === '(auth)' ? <Redirect href="/" /> : children;
+  }
+  if (group === '(auth)' && allowedAuthScreens(step).includes(screen)) return children;
+  return <Redirect href={`/${step}`} />;
 }
 
 function Analytics({ children }: { children: ReactNode }) {
@@ -75,7 +106,9 @@ function RootLayout() {
             <StatusBar style="dark" />
             <OfflineBanner />
             <SystemGate>
-              <Stack screenOptions={{ headerShown: false }} />
+              <AuthGate>
+                <Stack screenOptions={{ headerShown: false }} />
+              </AuthGate>
             </SystemGate>
           </Analytics>
         </PersistQueryClientProvider>

@@ -17,7 +17,65 @@
     "switchLanguage": "नेपालीमा हेर्नुहोस्",
     "languageName": "English"
   },
-  "auth": {},
+  "auth": {
+    "language": {
+      "title": "Choose your language",
+      "subtitle": "You can change it later in Settings."
+    },
+    "intro": {
+      "slide1Title": "Good food, saved",
+      "slide1Body": "Restaurants, bakeries and shops near you sell their extra food at a big discount before closing.",
+      "slide2Title": "Reserve and pay in the app",
+      "slide2Body": "Pick an offer, pay with eSewa or Khalti, and get a pickup code.",
+      "slide3Title": "Pick it up",
+      "slide3Body": "Show your code at the shop during the pickup time. Happy hour deals are shown too.",
+      "skip": "Skip",
+      "next": "Next",
+      "start": "Get started"
+    },
+    "login": {
+      "title": "Log in or sign up",
+      "subtitle": "We will send you a 6-digit code.",
+      "tabPhone": "Phone",
+      "tabEmail": "Email",
+      "phoneLabel": "Mobile number",
+      "phoneHint": "10 digits, starting with 98 or 97",
+      "phoneInvalid": "Enter a valid Nepal mobile number (98XXXXXXXX)",
+      "emailLabel": "Email address",
+      "emailInvalid": "Enter a valid email address",
+      "continue": "Send code",
+      "business": "I run a business"
+    },
+    "otp": {
+      "title": "Enter the code",
+      "sentTo": "We sent a 6-digit code to {{id}}.",
+      "enterCode": "6-digit code",
+      "resendIn": "Resend code in {{seconds}} s",
+      "resend": "Resend code",
+      "resent": "A new code is on its way.",
+      "wrong": "That code is not correct. {{left}} tries left.",
+      "locked": "Too many wrong codes. Try again in {{minutes}} min.",
+      "verifying": "Checking…",
+      "smsDown": "We could not send an SMS right now. You can log in with your email instead.",
+      "useEmail": "Use email instead",
+      "changeNumber": "Change number",
+      "changeEmail": "Change email"
+    },
+    "location": {
+      "title": "Find food near you",
+      "body": "We use your location only to show offers nearby. It is never saved.",
+      "useLocation": "Use my location",
+      "pickArea": "Choose an area instead",
+      "denied": "Location is off. Choose your area from the list.",
+      "areasTitle": "Areas we cover",
+      "noAreas": "No areas yet. Please try again later."
+    },
+    "business": {
+      "title": "Business sign-up",
+      "body": "Sign-up for restaurants, bakeries and shops is coming soon.",
+      "back": "Back"
+    }
+  },
   "offers": {},
   "orders": {},
   "wallet": {},
@@ -101,5 +159,11 @@
     "updateTitle": "Update needed",
     "updateButton": "Update now",
     "maintenanceTitle": "Back soon"
+  },
+  "home": {
+    "signedInAs": "Signed in as {{who}}",
+    "area": "Area: {{area}}",
+    "nearMe": "Showing offers near you",
+    "signOut": "Log out"
   }
 }
