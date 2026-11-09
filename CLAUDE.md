@@ -12,6 +12,7 @@
 - Keep UI black and white (design kit tokens only).
 
 ## Save tokens: use the Graphify graph before reading files
+
 - The repo is indexed in the Graphify connector (repository_id `Rahul-Jung/food-rescue`). Query it before opening files.
 - Locate first, cheaply: `graphify_find` for a symbol, `query_graph` with `skeleton: true` and a small `budget` (800-2000) for "where/how" questions.
 - Then read only what you need: `graphify_node` / `graphify_expand` for one definition, or Read with `offset`/`limit` on the lines the graph gave. Don't read whole files unless the graph has nothing.
