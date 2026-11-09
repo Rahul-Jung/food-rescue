@@ -259,13 +259,13 @@ otp_expiry = 3600
 [auth.sms]
 # Allow/disallow the phone provider. When false, users can't sign up or sign in with SMS.
 # To block new signups only, set enable_signup = false under [auth] instead.
-enabled = false
+enabled = true
 # If enabled, users need to confirm their phone number before signing in.
-enable_confirmations = false
+enable_confirmations = true
 # Template for sending OTP to users
 template = "Your code is {{ .Code }}"
 # Controls the minimum amount of time that must pass before sending another sms otp.
-max_frequency = "5s"
+max_frequency = "30s" # plan: resend after 30 s; 3 per 15 min is enforced in sms-hook (0005)
 
 # Use pre-defined map of phone number to OTP for testing.
 # Keys are the phone number with country code and without the + prefix.
@@ -290,13 +290,20 @@ max_frequency = "5s"
 enabled = true
 uri = "pg-functions://postgres/public/custom_access_token_hook"
 
+# Auth sends OTP SMS through the sms-hook Edge Function (T2.3). Secret is local only.
+[auth.hook.send_sms]
+enabled = true
+uri = "http://host.docker.internal:54321/functions/v1/sms-hook"
+secrets = "env(SEND_SMS_HOOK_SECRET)"
+
 # Configure one of the supported SMS providers: `twilio`, `twilio_verify`, `messagebird`, `textlocal`, `vonage`.
+# Local only: the CLI turns phone login on only when a provider block is enabled.
+# Twilio is never called: the send_sms hook above takes over every OTP. Placeholder values, no account.
 [auth.sms.twilio]
-enabled = false
-account_sid = ""
-message_service_sid = ""
-# DO NOT commit your Twilio auth token to git. Use environment variable substitution instead:
-auth_token = "env(SUPABASE_AUTH_SMS_TWILIO_AUTH_TOKEN)"
+enabled = true
+account_sid = "unused-local-placeholder"
+message_service_sid = "unused-local-placeholder"
+auth_token = "unused-local-placeholder"
 
 # Multi-factor-authentication is available to Supabase Pro plan.
 [auth.mfa]
@@ -422,3 +429,7 @@ enabled = true
 # formatted with uppercase keywords, indent 2, max width 180, trailing commas,
 # and column/key alignment. Set to "null" to emit raw, unformatted SQL.
 # format_options = "{\"keywordCase\":\"upper\",\"indent\":2,\"maxWidth\":180,\"commaStyle\":\"trailing\"}"
+
+# Called by Supabase Auth with a signed webhook, not a user JWT.
+[functions.sms-hook]
+verify_jwt = false

@@ -28,6 +28,19 @@ jobs:
       # Jest for every package, then scripts/check-i18n.ts (fails on a missing key)
       - run: pnpm test
 
+  functions:
+    name: Deno tests (Edge Functions)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      # --no-config: Deno must not read or rewrite the pnpm workspace files
+      - run: deno check --no-config --no-lock supabase/functions/*/index.ts
+      - run: deno test --no-config --no-lock supabase/functions/
+
   db:
     name: pgTAP on local Supabase
     runs-on: ubuntu-latest
@@ -37,6 +50,10 @@ jobs:
       - uses: supabase/setup-cli@v1
         with:
           version: 3.0.0
+      # config.toml reads the send_sms hook secret from the environment; CI has
+      # no supabase/.env, so make a throwaway one for this run.
+      - name: Throwaway auth hook secret
+        run: echo "SEND_SMS_HOOK_SECRET=v1,whsec_$(openssl rand -base64 32)" >> "$GITHUB_ENV"
       - name: Start database only
         run: supabase start -x studio,imgproxy,mailpit,logflare,vector,supavisor,edge-runtime,postgres-meta,gotrue,kong,postgrest
       - name: Migrations apply cleanly

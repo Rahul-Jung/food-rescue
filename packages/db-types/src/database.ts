@@ -85,6 +85,27 @@ export type Database = {
         };
         Relationships: [];
       };
+      otp_sends: {
+        Row: {
+          created_at: string;
+          id: number;
+          phone: string;
+          sent_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: number;
+          phone: string;
+          sent_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: number;
+          phone?: string;
+          sent_at?: string;
+        };
+        Relationships: [];
+      };
       profiles: {
         Row: {
           avatar_url: string | null;
@@ -148,6 +169,7 @@ export type Database = {
       jwt_is_active: { Args: never; Returns: boolean };
       jwt_is_admin: { Args: never; Returns: boolean };
       now_npt: { Args: never; Returns: string };
+      otp_send_allowed: { Args: { p_phone: string }; Returns: boolean };
     };
     Enums: {
       account_status: 'active' | 'suspended' | 'deleted';
