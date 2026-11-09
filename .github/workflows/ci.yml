@@ -50,6 +50,10 @@ jobs:
       - uses: supabase/setup-cli@v1
         with:
           version: 3.0.0
+      # config.toml reads the send_sms hook secret from the environment; CI has
+      # no supabase/.env, so make a throwaway one for this run.
+      - name: Throwaway auth hook secret
+        run: echo "SEND_SMS_HOOK_SECRET=v1,whsec_$(openssl rand -base64 32)" >> "$GITHUB_ENV"
       - name: Start database only
         run: supabase start -x studio,imgproxy,mailpit,logflare,vector,supavisor,edge-runtime,postgres-meta,gotrue,kong,postgrest
       - name: Migrations apply cleanly
