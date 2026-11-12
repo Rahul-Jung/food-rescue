@@ -24,6 +24,19 @@ export function toE164(phone: string): string {
   return p.startsWith('+') ? p : `+${p}`;
 }
 
+/**
+ * Who gets the SMS. Auth names the destination in `sms.phone`; for a phone
+ * change (C-24) that is the new number, while `user.phone` is still the old
+ * one (`user.new_phone` also holds the new one). The code must go to the new one.
+ */
+export function smsRecipient(
+  sms: { phone?: string },
+  user: { phone?: string; new_phone?: string },
+): string {
+  const target = [sms.phone, user.new_phone, user.phone].find((p) => p?.trim());
+  return toE164(target ?? '');
+}
+
 /** For logs: +97798****5678 (never log a full number). */
 export function maskPhone(phone: string): string {
   return phone.replace(/^(\+?\d{5})\d+(\d{4})$/, '$1****$2');

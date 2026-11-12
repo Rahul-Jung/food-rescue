@@ -4,7 +4,6 @@ import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { Button, Text } from '../src/components';
-import { logout } from '../src/features/auth/logout';
 import { queryClient } from '../src/lib/queryClient';
 import { useLanguageStore } from '../src/store/language';
 import { useLocationStore } from '../src/store/location';
@@ -37,7 +36,9 @@ export default function Home() {
         label={t('settings.switchLanguage')}
         onPress={() => setLocale(locale === 'en' ? 'ne' : 'en')}
       />
-      <Button variant="ghost" label={t('home.signOut')} onPress={() => void logout()} />
+      <Link href="/profile" asChild>
+        <Button variant="secondary" label={t('home.profile')} />
+      </Link>
       {__DEV__ ? (
         <Text variant="caption" color="grey500">
           {t('home.cachedItems', { count: queryClient.getQueryCache().getAll().length })}

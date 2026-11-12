@@ -18,6 +18,25 @@ export const passwordSchema = z
   .regex(/[A-Za-z]/, 'needs_letter')
   .regex(/\d/, 'needs_digit');
 
+/** Longest profile name (C-24); same as is_valid_profile_name() in the DB. */
+export const PROFILE_NAME_MAX = 60;
+
+/**
+ * Profile name (C-24): any script, so Devanagari names (with vowel signs)
+ * work; 1-60 characters; no digits, control characters or ASCII symbols
+ * except space . ' -. Mirrors public.is_valid_profile_name().
+ */
+export const profileNameSchema = z
+  .string()
+  .trim()
+  .min(1, 'required')
+  .max(PROFILE_NAME_MAX, 'too_long')
+  .refine(
+    // eslint-disable-next-line no-control-regex
+    (s) => !/[\u0000-\u001f\u007f0-9!"#$%&()*+,/:;<=>?@[\\\]^_`{|}~]/.test(s),
+    'invalid_chars',
+  );
+
 /** Wrong codes allowed before the lock (C-04). */
 export const OTP_MAX_WRONG = 5;
 /** Lock length after OTP_MAX_WRONG wrong codes (C-04). */
