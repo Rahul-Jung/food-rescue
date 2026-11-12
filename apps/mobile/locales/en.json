@@ -10,12 +10,22 @@
     "loading": "Loading…",
     "close": "Close",
     "increase": "Increase",
-    "decrease": "Decrease"
+    "decrease": "Decrease",
+    "back": "Back"
   },
   "settings": {
     "language": "Language",
     "switchLanguage": "नेपालीमा हेर्नुहोस्",
-    "languageName": "English"
+    "languageName": "English",
+    "radius": "Show offers within",
+    "radiusHint": "How far from you or your area to look for food.",
+    "km": "{{km}} km",
+    "pickupReminders": "Pickup reminders",
+    "pickupRemindersHint": "A reminder before your pickup time.",
+    "marketing": "Offers and news",
+    "marketingHint": "Occasional messages about new offers near you.",
+    "digitsHint": "Show numbers like {{sample}}.",
+    "saveFailed": "Could not save. Please try again."
   },
   "auth": {
     "language": {
@@ -199,6 +209,30 @@
     "area": "Area: {{area}}",
     "nearMe": "Showing offers near you",
     "signOut": "Log out",
-    "cachedItems": "Saved data on this phone: {{count}}"
+    "cachedItems": "Saved data on this phone: {{count}}",
+    "profile": "Profile"
+  },
+  "profile": {
+    "soon": "Coming soon",
+    "noName": "Add your name",
+    "edit": "Edit profile",
+    "settings": "Settings",
+    "settingsHint": "Language, distance, notifications",
+    "payments": "Payments",
+    "notifications": "Notifications",
+    "help": "Help",
+    "terms": "Terms of use",
+    "privacy": "Privacy",
+    "deleteAccount": "Delete account",
+    "nameLabel": "Your name",
+    "nameHint": "Nepali or English, up to 60 letters",
+    "nameRules": "Use letters only (Nepali or English), up to 60.",
+    "saveName": "Save name",
+    "saved": "Saved",
+    "phoneTitle": "Mobile number",
+    "noPhone": "No mobile number yet",
+    "newPhone": "New mobile number",
+    "samePhone": "That is already your number.",
+    "phoneChanged": "Your number is now {{phone}}."
   }
 }

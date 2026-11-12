@@ -1,6 +1,6 @@
 import { assert, assertEquals, assertThrows } from 'jsr:@std/assert@1';
 
-import { buildOtpMessage, maskPhone, smsLocale, toE164 } from './message.ts';
+import { buildOtpMessage, maskPhone, smsLocale, smsRecipient, toE164 } from './message.ts';
 import { getProvider } from './providers.ts';
 
 const env = (vars: Record<string, string>) => ({ get: (k: string) => vars[k] });
@@ -39,6 +39,28 @@ Deno.test('phone helpers', () => {
   assertEquals(toE164('9779812345678'), '+9779812345678');
   assertEquals(toE164('+9779812345678'), '+9779812345678');
   assertEquals(maskPhone('+9779812345678'), '+97798****5678');
+});
+
+Deno.test('phone change sends the code to the new number', () => {
+  // Normal login: destination is the user's phone
+  assertEquals(
+    smsRecipient({ phone: '9779812345678' }, { phone: '9779812345678' }),
+    '+9779812345678',
+  );
+  // Phone change: Auth names the new number in sms.phone (user.phone is still the old one)
+  assertEquals(
+    smsRecipient(
+      { phone: '9779712345678' },
+      { phone: '9779812345678', new_phone: '9779712345678' },
+    ),
+    '+9779712345678',
+  );
+  // Fallbacks when sms.phone is missing
+  assertEquals(
+    smsRecipient({}, { phone: '9779812345678', new_phone: '9779712345678' }),
+    '+9779712345678',
+  );
+  assertEquals(smsRecipient({ phone: '' }, { phone: '9779812345678' }), '+9779812345678');
 });
 
 Deno.test('console provider only on a local stack', () => {

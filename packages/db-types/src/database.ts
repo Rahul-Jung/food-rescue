@@ -1,11 +1,6 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-  __InternalSupabase: {
-    PostgrestVersion: '14.18';
-  };
   public: {
     Tables: {
       app_settings: {
@@ -15,15 +10,16 @@ export type Database = {
           key: string;
           updated_at: string;
           updated_by: string | null;
-          value: Json;
+          value: NonNullable<Json>;
         };
+        ComputedFields: never;
         Insert: {
           created_at?: string;
           is_public?: boolean;
           key: string;
           updated_at?: string;
           updated_by?: string | null;
-          value: Json;
+          value: NonNullable<Json>;
         };
         Update: {
           created_at?: string;
@@ -31,7 +27,7 @@ export type Database = {
           key?: string;
           updated_at?: string;
           updated_by?: string | null;
-          value?: Json;
+          value?: NonNullable<Json>;
         };
         Relationships: [
           {
@@ -57,6 +53,7 @@ export type Database = {
           ip: unknown;
           user_agent: string | null;
         };
+        ComputedFields: never;
         Insert: {
           action: string;
           actor_id?: string | null;
@@ -92,6 +89,7 @@ export type Database = {
           phone: string;
           sent_at: string;
         };
+        ComputedFields: never;
         Insert: {
           created_at?: string;
           id?: number;
@@ -111,23 +109,32 @@ export type Database = {
           avatar_url: string | null;
           created_at: string;
           deleted_at: string | null;
+          devanagari_digits: boolean;
           email: string | null;
           full_name: string | null;
           id: string;
           locale: string;
+          marketing_pushes: boolean;
           phone: string | null;
+          pickup_reminders: boolean;
+          radius_m: number;
           role: Database['public']['Enums']['app_role'];
           status: Database['public']['Enums']['account_status'];
         };
+        ComputedFields: never;
         Insert: {
           avatar_url?: string | null;
           created_at?: string;
           deleted_at?: string | null;
+          devanagari_digits?: boolean;
           email?: string | null;
           full_name?: string | null;
           id: string;
           locale?: string;
+          marketing_pushes?: boolean;
           phone?: string | null;
+          pickup_reminders?: boolean;
+          radius_m?: number;
           role?: Database['public']['Enums']['app_role'];
           status?: Database['public']['Enums']['account_status'];
         };
@@ -135,11 +142,15 @@ export type Database = {
           avatar_url?: string | null;
           created_at?: string;
           deleted_at?: string | null;
+          devanagari_digits?: boolean;
           email?: string | null;
           full_name?: string | null;
           id?: string;
           locale?: string;
+          marketing_pushes?: boolean;
           phone?: string | null;
+          pickup_reminders?: boolean;
+          radius_m?: number;
           role?: Database['public']['Enums']['app_role'];
           status?: Database['public']['Enums']['account_status'];
         };
@@ -149,9 +160,10 @@ export type Database = {
     Views: {
       app_settings_public: {
         Row: {
-          key: string | null;
-          value: Json | null;
+          key: string;
+          value: NonNullable<Json>;
         };
+        ComputedFields: never;
         Insert: {
           key?: string | null;
           value?: Json | null;
@@ -165,11 +177,45 @@ export type Database = {
     };
     Functions: {
       app_setting: { Args: { p_key: string }; Returns: Json };
+      app_setting_public_value: { Args: { p_key: string }; Returns: Json };
       custom_access_token_hook: { Args: { event: Json }; Returns: Json };
-      jwt_is_active: { Args: never; Returns: boolean };
-      jwt_is_admin: { Args: never; Returns: boolean };
-      now_npt: { Args: never; Returns: string };
+      is_valid_profile_name: { Args: { p_name: string }; Returns: boolean };
+      jwt_is_active: { Args: Record<PropertyKey, never>; Returns: boolean };
+      jwt_is_admin: { Args: Record<PropertyKey, never>; Returns: boolean };
+      now_npt: { Args: Record<PropertyKey, never>; Returns: string };
       otp_send_allowed: { Args: { p_phone: string }; Returns: boolean };
+      update_my_profile: {
+        Args: {
+          p_devanagari_digits?: boolean;
+          p_full_name?: string;
+          p_locale?: string;
+          p_marketing_pushes?: boolean;
+          p_pickup_reminders?: boolean;
+          p_radius_m?: number;
+        };
+        Returns: {
+          avatar_url: string | null;
+          created_at: string;
+          deleted_at: string | null;
+          devanagari_digits: boolean;
+          email: string | null;
+          full_name: string | null;
+          id: string;
+          locale: string;
+          marketing_pushes: boolean;
+          phone: string | null;
+          pickup_reminders: boolean;
+          radius_m: number;
+          role: Database['public']['Enums']['app_role'];
+          status: Database['public']['Enums']['account_status'];
+        };
+        SetofOptions: {
+          from: '*';
+          to: 'profiles';
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
+      };
     };
     Enums: {
       account_status: 'active' | 'suspended' | 'deleted';
@@ -216,9 +262,7 @@ export type Tables<
     ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
         DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals;
-}
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
   ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
       DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])[TableName] extends {
       Row: infer R;
@@ -242,9 +286,7 @@ export type TablesInsert<
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals;
-}
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
   ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Insert: infer I;
     }
@@ -267,9 +309,7 @@ export type TablesUpdate<
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals;
-}
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
   ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Update: infer U;
     }
@@ -292,9 +332,7 @@ export type Enums<
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums']
     : never = never,
-> = DefaultSchemaEnumNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals;
-}
+> = DefaultSchemaEnumNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
   ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums'][EnumName]
   : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema['Enums']
     ? DefaultSchema['Enums'][DefaultSchemaEnumNameOrOptions]
@@ -309,9 +347,7 @@ export type CompositeTypes<
   }
     ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
     : never = never,
-> = PublicCompositeTypeNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals;
-}
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
   ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
   : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema['CompositeTypes']
     ? DefaultSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]

@@ -4,12 +4,17 @@
 import { createClient } from 'npm:@supabase/supabase-js@2.119.0';
 import { Webhook } from 'npm:standardwebhooks@1.0.0';
 
-import { buildOtpMessage, maskPhone, smsLocale, toE164 } from './message.ts';
+import { buildOtpMessage, maskPhone, smsLocale, smsRecipient } from './message.ts';
 import { getProvider } from './providers.ts';
 
 interface SendSmsPayload {
-  user: { id: string; phone: string; user_metadata?: Record<string, unknown> };
-  sms: { otp: string };
+  user: {
+    id: string;
+    phone: string;
+    new_phone?: string;
+    user_metadata?: Record<string, unknown>;
+  };
+  sms: { otp: string; phone?: string };
 }
 
 // Auth reads { error: { http_code, message } } from a 200 response and passes
@@ -34,7 +39,8 @@ Deno.serve(async (req) => {
     return hookError(401, 'Invalid signature');
   }
 
-  const phone = toE164(payload.user.phone);
+  // Where Auth wants the SMS: the new number for a phone change (T2.6).
+  const phone = smsRecipient(payload.sms, payload.user);
   const admin = createClient(
     Deno.env.get('SUPABASE_URL') ?? '',
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
