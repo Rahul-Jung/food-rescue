@@ -1,5 +1,5 @@
 import { formatPrice } from '@food-rescue/shared';
-import { Redirect } from 'expo-router';
+import { Redirect, type Href } from 'expo-router';
 import { useMemo, useState, type ReactNode } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -54,7 +54,7 @@ export default function Kit() {
   const [crash, setCrash] = useState(false);
   const until = useMemo(() => new Date(Date.now() + 10 * 60_000), []);
 
-  if (!__DEV__) return <Redirect href="/" />;
+  if (!__DEV__) return <Redirect href={'/' as Href} />;
 
   return (
     <SafeAreaView style={styles.safe}>

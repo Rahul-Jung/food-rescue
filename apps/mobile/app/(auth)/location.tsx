@@ -1,5 +1,5 @@
 import * as Location from 'expo-location';
-import { useRouter } from 'expo-router';
+import { useRouter, type Href } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -34,7 +34,7 @@ export default function LocationScreen() {
 
   const done = () => {
     setLocationDone();
-    router.replace('/');
+    router.replace('/' as Href); // customer home (/(customer)/index)
   };
 
   const useMyLocation = async () => {

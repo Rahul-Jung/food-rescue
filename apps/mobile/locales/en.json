@@ -234,5 +234,20 @@
     "newPhone": "New mobile number",
     "samePhone": "That is already your number.",
     "phoneChanged": "Your number is now {{phone}}."
+  },
+  "blocked": {
+    "title": "Account blocked",
+    "deletedBody": "This account has been deleted.",
+    "contactHint": "If you think this is a mistake, please contact us.",
+    "callSupport": "Call support",
+    "emailSupport": "Email support"
+  },
+  "adminOnly": {
+    "title": "Admin account",
+    "body": "Admins use the Food Rescue admin panel, not this app. Please log out and use the admin panel on a computer."
+  },
+  "vendorHome": {
+    "title": "Vendor home",
+    "body": "Your business screens (offers, orders, wallet) are coming soon."
   }
 }

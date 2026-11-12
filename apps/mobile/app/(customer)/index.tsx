@@ -3,12 +3,12 @@ import { Link } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Text } from '../src/components';
-import { queryClient } from '../src/lib/queryClient';
-import { useLanguageStore } from '../src/store/language';
-import { useLocationStore } from '../src/store/location';
-import { useSessionStore } from '../src/store/session';
-import { color, space } from '../src/theme';
+import { Button, Text } from '../../src/components';
+import { queryClient } from '../../src/lib/queryClient';
+import { useLanguageStore } from '../../src/store/language';
+import { useLocationStore } from '../../src/store/location';
+import { useSessionStore } from '../../src/store/session';
+import { color, space } from '../../src/theme';
 
 /** Placeholder customer home until C-06 (later task). */
 export default function Home() {

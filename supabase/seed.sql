@@ -17,3 +17,39 @@ set value = '[
   {"name": "New Road", "name_ne": "न्युरोड", "lat": 27.7041, "lng": 85.3093}
 ]'::jsonb
 where key = 'pilot_areas';
+
+-- T2.7 test logins (local only; phone OTP, the code shows in the sms-hook log):
+--   +9779800000001  vendor             -> lands on vendor home
+--   +9779800000002  suspended customer -> sees the blocked screen
+do $$
+declare
+  u record;
+begin
+  for u in
+    select * from (values
+      ('00000000-0000-0000-0000-0000000a0001'::uuid, '9779800000001', 'vendor'::public.app_role, 'active'::public.account_status, 'Test Vendor'),
+      ('00000000-0000-0000-0000-0000000a0002'::uuid, '9779800000002', 'customer'::public.app_role, 'suspended'::public.account_status, 'Suspended Customer')
+    ) as t(id, phone, role, status, full_name)
+  loop
+    insert into auth.users (
+      instance_id, id, aud, role, phone, phone_confirmed_at,
+      raw_app_meta_data, raw_user_meta_data, created_at, updated_at,
+      -- Auth reads these as strings; NULL breaks login
+      confirmation_token, recovery_token, email_change_token_new, email_change,
+      phone_change, phone_change_token, email_change_token_current, reauthentication_token
+    ) values (
+      '00000000-0000-0000-0000-000000000000', u.id, 'authenticated', 'authenticated', u.phone, now(),
+      '{"provider": "phone", "providers": ["phone"]}', jsonb_build_object('full_name', u.full_name),
+      now(), now(), '', '', '', '', '', '', '', ''
+    ) on conflict (id) do nothing;
+
+    insert into auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at)
+    values (
+      u.id::text, u.id,
+      jsonb_build_object('sub', u.id::text, 'phone', u.phone, 'phone_verified', true),
+      'phone', now(), now(), now()
+    ) on conflict do nothing;
+
+    update public.profiles set role = u.role, status = u.status where id = u.id;
+  end loop;
+end $$;
