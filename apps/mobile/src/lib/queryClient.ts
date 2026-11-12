@@ -16,9 +16,12 @@ export const queryClient = new QueryClient({
 });
 
 /** Cache survives restarts, so screens show saved data when offline. */
+/** Where the persisted cache lives in MMKV (cleared on logout). */
+export const QUERY_CACHE_KEY = 'query-cache';
+
 export const queryPersister = createSyncStoragePersister({
   storage: appStringStorage,
-  key: 'query-cache',
+  key: QUERY_CACHE_KEY,
 });
 
 // Pause and resume queries with the real network state.

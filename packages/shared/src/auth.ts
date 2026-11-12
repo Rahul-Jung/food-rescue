@@ -2,6 +2,21 @@
 // check"; "resend after 30 s (max 3 per 15 min); 5 wrong = 15 min lock".
 // The resend gap is read from app_settings.otp_resend_seconds by the app; the
 // 3-per-15-min send limit is enforced on the server by sms-hook (T2.3).
+import { z } from 'zod';
+
+/** Email for sign-up / login, trimmed and lower-cased. */
+export const loginEmailSchema = z.string().trim().toLowerCase().pipe(z.email().max(254));
+
+/** Minimum password length; matches auth.minimum_password_length in config.toml. */
+export const PASSWORD_MIN_LENGTH = 8;
+
+/** At least 8 characters with a letter and a digit (Auth password_requirements = letters_digits). */
+export const passwordSchema = z
+  .string()
+  .min(PASSWORD_MIN_LENGTH, 'too_short')
+  .max(72, 'too_long') // bcrypt limit used by Supabase Auth
+  .regex(/[A-Za-z]/, 'needs_letter')
+  .regex(/\d/, 'needs_digit');
 
 /** Wrong codes allowed before the lock (C-04). */
 export const OTP_MAX_WRONG = 5;

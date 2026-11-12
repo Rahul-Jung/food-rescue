@@ -25,6 +25,9 @@ export const ERROR_CODES = [
   'REVIEW_NOT_ALLOWED',
   'APP_UPDATE_REQUIRED',
   'MAINTENANCE',
+  // Email + password login (T2.5); not in the section 6 list, added with the task.
+  'EMAIL_NOT_CONFIRMED',
+  'INVALID_CREDENTIALS',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

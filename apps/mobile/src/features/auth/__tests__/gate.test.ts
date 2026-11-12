@@ -25,8 +25,27 @@ describe('splash routing', () => {
     expect(authStep(base)).toBe('app');
   });
 
-  it('login step allows login, OTP and the business link', () => {
-    expect(allowedAuthScreens('login')).toEqual(['login', 'otp', 'business']);
+  it('login step allows login, OTP, business link and the email screens', () => {
+    expect(allowedAuthScreens('login')).toEqual([
+      'login',
+      'otp',
+      'business',
+      'forgot-password',
+      'check-email',
+      'auth-callback',
+    ]);
     expect(allowedAuthScreens('location')).toEqual(['location']);
+  });
+
+  it('a password-reset link goes to "set a new password" first', () => {
+    expect(authStep({ ...base, passwordRecovery: true })).toBe('reset-password');
+    expect(authStep({ ...base, locationDone: false, passwordRecovery: true })).toBe(
+      'reset-password',
+    );
+    expect(allowedAuthScreens('reset-password')).toEqual(['reset-password']);
+  });
+
+  it('a restored session skips login', () => {
+    expect(authStep({ ...base, signedIn: true })).toBe('app');
   });
 });

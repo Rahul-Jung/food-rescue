@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, OfflineBanner, Text } from '../src/components';
 import { allowedAuthScreens, authStep } from '../src/features/auth/gate';
+import { useAuthDeepLinks } from '../src/features/auth/useAuthDeepLinks';
 import { useAuthSession } from '../src/features/auth/useAuthSession';
 import { posthog } from '../src/lib/analytics';
 import { useOnboardingStore } from '../src/store/onboarding';
@@ -49,9 +50,11 @@ function SystemGate({ children }: { children: ReactNode }) {
 /** Splash routing: language (first launch) -> intro (once) -> login -> location -> app. */
 function AuthGate({ children }: { children: ReactNode }) {
   useAuthSession();
+  useAuthDeepLinks();
   const segments = useSegments() as string[];
   const ready = useSessionStore((s) => s.ready);
   const signedIn = useSessionStore((s) => s.session !== null);
+  const passwordRecovery = useSessionStore((s) => s.passwordRecovery);
   const onboarding = useOnboardingStore();
 
   if (!ready) {
@@ -62,7 +65,7 @@ function AuthGate({ children }: { children: ReactNode }) {
     );
   }
 
-  const step = authStep({ ...onboarding, signedIn });
+  const step = authStep({ ...onboarding, signedIn, passwordRecovery });
   const [group, screen = 'index'] = segments;
   if (group === '(system)' || (__DEV__ && group === 'dev')) return children;
 

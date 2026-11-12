@@ -10,6 +10,10 @@ jest.mock('react-native-mmkv', () => {
   };
 });
 
+jest.mock('@react-native-community/netinfo', () =>
+  require('@react-native-community/netinfo/jest/netinfo-mock.js'),
+);
+
 jest.mock('expo-localization', () => ({
   getLocales: () => [{ languageCode: 'en' }],
 }));

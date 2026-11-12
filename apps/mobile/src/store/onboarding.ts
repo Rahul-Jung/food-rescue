@@ -23,6 +23,8 @@ interface OnboardingState {
   setIntroSeen: () => void;
   setArea: (area: PilotArea | null) => void;
   setLocationDone: () => void;
+  /** Logout: forget this user's location choice; keep language and intro. */
+  resetForLogout: () => void;
 }
 
 export const useOnboardingStore = create<OnboardingState>()(
@@ -36,6 +38,7 @@ export const useOnboardingStore = create<OnboardingState>()(
       setIntroSeen: () => set({ introSeen: true }),
       setArea: (area) => set({ area }),
       setLocationDone: () => set({ locationDone: true }),
+      resetForLogout: () => set({ locationDone: false, area: null }),
     }),
     { name: 'onboarding', storage: createJSONStorage(() => appStringStorage) },
   ),
