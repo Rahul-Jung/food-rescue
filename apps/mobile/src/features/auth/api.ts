@@ -104,6 +104,20 @@ export async function sendPasswordReset(email: string): Promise<void> {
   if (error) throw toAuthFailure(error, 'password');
 }
 
+/**
+ * Code from the confirm / reset email (works in any email app, no link
+ * needed). 'signup' confirms the email and signs in; 'recovery' signs in for
+ * setting a new password.
+ */
+export async function verifyEmailCode(
+  email: string,
+  token: string,
+  type: 'signup' | 'recovery',
+): Promise<void> {
+  const { error } = await supabase.auth.verifyOtp({ email, token, type });
+  if (error) throw toAuthFailure(error, 'email');
+}
+
 /** Sets a new password for the signed-in (recovery) session. */
 export async function updatePassword(password: string): Promise<void> {
   const { error } = await supabase.auth.updateUser({ password });

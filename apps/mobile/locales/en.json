@@ -93,7 +93,8 @@
       "resendIn": "Send again in {{seconds}} s",
       "resent": "We sent the email again.",
       "backToLogin": "Back to login",
-      "linkExpired": "That link has expired or was already used. Please try again."
+      "linkExpired": "That link has expired or was already used. Please try again.",
+      "codeHint": "Or type the 6-digit code from the email:"
     },
     "reset": {
       "forgotTitle": "Reset your password",
