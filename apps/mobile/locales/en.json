@@ -74,6 +74,38 @@
       "title": "Business sign-up",
       "body": "Sign-up for restaurants, bakeries and shops is coming soon.",
       "back": "Back"
+    },
+    "email": {
+      "subtitle": "Log in with your email and password.",
+      "signIn": "Log in",
+      "signUp": "New account",
+      "passwordLabel": "Password",
+      "passwordRules": "At least 8 characters, with a letter and a number.",
+      "passwordRequired": "Enter your password.",
+      "createAccount": "Create account",
+      "logIn": "Log in",
+      "forgot": "Forgot password?",
+      "codeInstead": "Email me a code instead",
+      "checkTitle": "Check your email",
+      "checkBody": "We sent a link to {{email}}. Open it on this phone to confirm your email.",
+      "checkHint": "Did not get it? Check spam, or send it again.",
+      "resend": "Send the email again",
+      "resendIn": "Send again in {{seconds}} s",
+      "resent": "We sent the email again.",
+      "backToLogin": "Back to login",
+      "linkExpired": "That link has expired or was already used. Please try again.",
+      "codeHint": "Or type the 6-digit code from the email:"
+    },
+    "reset": {
+      "forgotTitle": "Reset your password",
+      "forgotBody": "Enter your email. We will send you a link to set a new password.",
+      "sendLink": "Send reset link",
+      "sent": "If {{email}} has an account, a reset link is on its way. Open it on this phone.",
+      "newTitle": "Set a new password",
+      "newLabel": "New password",
+      "confirmLabel": "Type it again",
+      "mismatch": "The passwords do not match.",
+      "save": "Save password"
     }
   },
   "offers": {},
@@ -105,7 +137,9 @@
     "PAYOUT_ACCOUNT_MISSING": "Add a payout account first.",
     "REVIEW_NOT_ALLOWED": "You can't review this order.",
     "APP_UPDATE_REQUIRED": "Please update the app to continue.",
-    "MAINTENANCE": "We're doing maintenance. Please check back soon."
+    "MAINTENANCE": "We're doing maintenance. Please check back soon.",
+    "EMAIL_NOT_CONFIRMED": "Please confirm your email first. Check your inbox.",
+    "INVALID_CREDENTIALS": "Wrong email or password."
   },
   "badges": {
     "live": "Live",
@@ -164,6 +198,7 @@
     "signedInAs": "Signed in as {{who}}",
     "area": "Area: {{area}}",
     "nearMe": "Showing offers near you",
-    "signOut": "Log out"
+    "signOut": "Log out",
+    "cachedItems": "Saved data on this phone: {{count}}"
   }
 }

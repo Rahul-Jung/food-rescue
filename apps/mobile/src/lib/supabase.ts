@@ -4,7 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 import { AppState } from 'react-native';
 
 import { env } from './env';
-import { secureStorage } from './storage';
+import { secureSessionStorage } from './secureSessionStorage';
 
 // The app only reads through RLS and calls named RPCs / Edge Functions; it never writes tables.
 export const supabase = createClient(
@@ -12,15 +12,11 @@ export const supabase = createClient(
   env.supabaseAnonKey || 'missing',
   {
     auth: {
-      storage: {
-        getItem: async (k) => (await secureStorage()).getString(k) ?? null,
-        setItem: async (k, v) => (await secureStorage()).set(k, v),
-        removeItem: async (k) => {
-          (await secureStorage()).remove(k);
-        },
-      },
+      // Session tokens live in the OS keystore (expo-secure-store), chunked.
+      storage: secureSessionStorage,
       autoRefreshToken: true,
       persistSession: true,
+      // Email links come back as foodrescue:// deep links, handled in features/auth/deepLinks.ts.
       detectSessionInUrl: false,
     },
   },

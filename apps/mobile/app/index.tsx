@@ -4,7 +4,8 @@ import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { Button, Text } from '../src/components';
-import { supabase } from '../src/lib/supabase';
+import { logout } from '../src/features/auth/logout';
+import { queryClient } from '../src/lib/queryClient';
 import { useLanguageStore } from '../src/store/language';
 import { useLocationStore } from '../src/store/location';
 import { useSessionStore } from '../src/store/session';
@@ -36,11 +37,12 @@ export default function Home() {
         label={t('settings.switchLanguage')}
         onPress={() => setLocale(locale === 'en' ? 'ne' : 'en')}
       />
-      <Button
-        variant="ghost"
-        label={t('home.signOut')}
-        onPress={() => void supabase.auth.signOut()}
-      />
+      <Button variant="ghost" label={t('home.signOut')} onPress={() => void logout()} />
+      {__DEV__ ? (
+        <Text variant="caption" color="grey500">
+          {t('home.cachedItems', { count: queryClient.getQueryCache().getAll().length })}
+        </Text>
+      ) : null}
       {__DEV__ ? (
         <Link href="/dev/kit" asChild>
           <Button variant="ghost" label={t('kit.title')} />

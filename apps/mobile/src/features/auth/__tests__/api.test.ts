@@ -1,7 +1,6 @@
 import { AuthApiError } from '@supabase/supabase-js';
 
 jest.mock('expo-secure-store', () => ({ getItemAsync: jest.fn(), setItemAsync: jest.fn() }));
-jest.mock('expo-crypto', () => ({ getRandomBytes: (n: number) => new Uint8Array(n) }));
 
 import { toAuthFailure } from '../api';
 
