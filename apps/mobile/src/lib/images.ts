@@ -80,7 +80,6 @@ export async function prepareFullAndThumb(uri: string) {
 interface SignedUpload {
   path: string;
   token: string;
-  publicUrl: string;
 }
 
 /** Asks upload-sign for a signed URL, then uploads. Retries three times. */
@@ -98,7 +97,9 @@ export async function uploadPublicImage(path: string, image: PreparedImage): Pro
         upsert: true,
       });
     if (up.error) throw toAppError(up.error);
-    return data.publicUrl;
+    // Built from the app's own Supabase URL: inside the function the URL is
+    // the internal one (http://kong:8000 locally), which a phone can't reach.
+    return supabase.storage.from('public-images').getPublicUrl(data.path).data.publicUrl;
   });
 }
 
