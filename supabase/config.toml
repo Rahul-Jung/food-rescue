@@ -452,3 +452,8 @@ enabled = true
 # Called by Supabase Auth with a signed webhook, not a user JWT.
 [functions.sms-hook]
 verify_jwt = false
+
+# T3.7: called by the notifications database webhook with a shared secret
+# (x-webhook-secret), not a user JWT.
+[functions.send-push]
+verify_jwt = false

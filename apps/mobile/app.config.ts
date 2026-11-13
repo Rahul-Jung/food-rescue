@@ -32,6 +32,23 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         isIosBackgroundLocationEnabled: false,
       },
     ],
+    [
+      'expo-image-picker',
+      {
+        // T3.2: logo and food photos; nothing is uploaded without the user picking it.
+        photosPermission: 'Food Rescue uses your photos so you can add a logo or food pictures.',
+        cameraPermission: 'Food Rescue uses the camera so you can take food pictures.',
+        microphonePermission: false,
+      },
+    ],
+    // react-native-maps (V-03, C-07): Google Maps on Android with a key
+    // restricted to the package + SHA-1; iOS uses Apple Maps (free).
+    [
+      'react-native-maps',
+      { androidGoogleMapsApiKey: process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY ?? '' },
+    ],
+    // T3.7: push notifications (Expo push service).
+    ['expo-notifications', { color: '#000000' }],
   ],
   experiments: { typedRoutes: true },
   owner: 'kairo10',

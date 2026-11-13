@@ -9,3 +9,4 @@ export * from './version';
 export * from './auth';
 export * from './adminAccess';
 export * from './mfaEnrolment';
+export * from './vendor';

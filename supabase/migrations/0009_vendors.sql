@@ -50,6 +50,29 @@ create table public.vendor_hours (
   primary key (vendor_id, day_of_week)
 );
 
+-- Pin as plain numbers: PostgREST returns geography as hex EWKB, so the apps
+-- read these computed fields instead (select=...,lat,lng).
+create function public.lat(public.vendors)
+returns double precision
+language sql
+immutable
+set search_path = ''
+as $$
+  select extensions.st_y($1.location::extensions.geometry);
+$$;
+
+create function public.lng(public.vendors)
+returns double precision
+language sql
+immutable
+set search_path = ''
+as $$
+  select extensions.st_x($1.location::extensions.geometry);
+$$;
+
+grant execute on function public.lat(public.vendors) to authenticated, service_role;
+grant execute on function public.lng(public.vendors) to authenticated, service_role;
+
 -- Helpers (SECURITY DEFINER so policies on one table can look at vendors
 -- without the caller's own vendors policies hiding the row) -------------------
 create function public.jwt_owns_vendor(p_vendor_id uuid)
@@ -145,6 +168,15 @@ begin
     raise exception 'FORBIDDEN' using errcode = '42501',
       detail = 'status, commission, strikes and approval fields are read-only';
   end if;
+  -- T3.8 / section 4: editing name, PAN or pin after approval sends the
+  -- vendor back to the admin queue; status stays approved so offers stay live.
+  if old.status = 'approved'
+     and (new.name is distinct from old.name
+       or new.pan_vat_no is distinct from old.pan_vat_no
+       or new.pan_doc_path is distinct from old.pan_doc_path
+       or new.location is distinct from old.location) then
+    new.pending_review := true;
+  end if;
   new.updated_at := now();
   return new;
 end;
@@ -163,7 +195,7 @@ create view public.vendors_public
 with (security_barrier = true)
 as
 select v.id, v.name, v.type, v.logo_url, v.description, v.area, v.landmark,
-       v.location, v.phone
+       v.location, public.lat(v) as lat, public.lng(v) as lng, v.phone
 from public.vendors v
 where v.status = 'approved'
   and public.jwt_is_active();

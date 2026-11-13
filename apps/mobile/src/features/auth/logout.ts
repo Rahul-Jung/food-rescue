@@ -7,6 +7,7 @@ import { supabase } from '../../lib/supabase';
 import { useLocationStore } from '../../store/location';
 import { useOnboardingStore } from '../../store/onboarding';
 import { useSessionStore } from '../../store/session';
+import { useVendorIntentStore } from '../../store/vendorIntent';
 
 export interface LogoutDeps {
   signOut: () => Promise<unknown>;
@@ -35,6 +36,7 @@ export async function logout(deps: LogoutDeps = defaultDeps): Promise<void> {
     deps.removePersisted(QUERY_CACHE_KEY);
     useLocationStore.getState().setPoint(null);
     useOnboardingStore.getState().resetForLogout();
+    useVendorIntentStore.getState().setWantsVendor(false);
     useSessionStore.getState().setPasswordRecovery(false);
     useSessionStore.getState().setOtpPending(false);
     useSessionStore.getState().setSession(null);

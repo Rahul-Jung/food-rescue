@@ -78,3 +78,9 @@ begin
     update public.profiles set role = u.role, status = u.status where id = u.id;
   end loop;
 end $$;
+
+-- T3.7 local only: the notifications webhook calls the local send-push
+-- function. Put the same secret in supabase/functions/.env as
+-- SEND_PUSH_WEBHOOK_SECRET. Staging and production set their own in Vault.
+select vault.create_secret('http://host.docker.internal:54321/functions/v1/send-push', 'send_push_url');
+select vault.create_secret('local-send-push-secret', 'send_push_secret');

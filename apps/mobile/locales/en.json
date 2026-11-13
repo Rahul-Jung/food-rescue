@@ -82,8 +82,10 @@
     },
     "business": {
       "title": "Business sign-up",
-      "body": "Sign-up for restaurants, bakeries and shops is coming soon.",
-      "back": "Back"
+      "body": "Restaurants, bakeries and shops: sign up with your phone. You will add your business details next.",
+      "back": "Back",
+      "emailHint": "We will email you a 6-digit code.",
+      "sendCode": "Send code"
     },
     "email": {
       "subtitle": "Log in with your email and password.",
@@ -248,6 +250,122 @@
   },
   "vendorHome": {
     "title": "Vendor home",
-    "body": "Your business screens (offers, orders, wallet) are coming soon."
+    "body": "Offers, orders and your wallet are coming soon.",
+    "underReview": "Changes under review",
+    "underReviewBody": "We are checking your new details. Your live offers stay up meanwhile.",
+    "business": "Business profile"
+  },
+  "vendorOnboarding": {
+    "signupFailed": "We could not set up your business account. Please try again.",
+    "suspended": "Your business account is suspended. Please contact support.",
+    "stepOf": "Step {{step}} of {{total}}",
+    "optional": "Optional",
+    "saveContinue": "Save and continue",
+    "profile": {
+      "title": "Business profile",
+      "name": "Business name",
+      "type": "Type of business",
+      "logo": "Logo",
+      "description": "Short description",
+      "phone": "Business phone",
+      "phoneHint": "Mobile or landline, e.g. 98XXXXXXXX or 01-4XXXXXX",
+      "email": "Business email"
+    },
+    "types": {
+      "restaurant": "Restaurant",
+      "grocery": "Grocery",
+      "bakery": "Bakery",
+      "cafe": "Café",
+      "hotel": "Hotel",
+      "other": "Other"
+    },
+    "photo": {
+      "library": "Choose photo",
+      "camera": "Take photo"
+    },
+    "fieldError": {
+      "name": "Enter a name of 2 to 120 letters.",
+      "type": "Pick a type of business.",
+      "description": "Keep the description under 2000 letters.",
+      "phone": "Enter a valid Nepal phone number.",
+      "email": "Enter a valid email or leave it empty.",
+      "address": "Enter the street address."
+    },
+    "location": {
+      "title": "Location",
+      "help": "Move the map so the pin sits on your shop's door. Customers will use it to find you.",
+      "mapLabel": "Map. Drag to move the pin.",
+      "useMine": "Use my current location",
+      "pinSet": "Pin placed.",
+      "outside": "This spot is outside our pilot area. You can still apply, but customers there may not see you yet.",
+      "address": "Street address",
+      "landmark": "Landmark",
+      "landmarkHint": "Optional, e.g. opposite the temple gate",
+      "noPermission": "Location permission is off. Drag the map instead.",
+      "noFix": "Could not find your location. Drag the map instead.",
+      "pinRequired": "Place the pin on the map."
+    },
+    "documents": {
+      "title": "Documents",
+      "help": "We check your PAN or VAT registration before your business goes live.",
+      "pan": "PAN / VAT number",
+      "panHint": "9 digits",
+      "panRules": "Enter the 9-digit PAN or VAT number.",
+      "panTaken": "This PAN is already registered to another business.",
+      "photo": "Photo of the PAN / VAT certificate",
+      "photoDone": "Photo uploaded",
+      "photoNone": "No photo yet",
+      "private": "Only you and our team can see this document.",
+      "submit": "Submit for approval",
+      "missing": "Please complete: {{fields}}"
+    },
+    "fields": {
+      "name": "business name",
+      "type": "type",
+      "phone": "phone",
+      "address": "address",
+      "location": "map pin",
+      "pan_vat_no": "PAN / VAT number",
+      "pan_doc_path": "PAN photo"
+    },
+    "status": {
+      "submittedTitle": "Waiting for approval",
+      "submittedBody": "Thanks! We review new businesses in 1 to 2 working days.",
+      "notifyHelp": "We will let you know by notification and email.",
+      "rejectedTitle": "Your application needs changes",
+      "rejectedReason": "Reason: {{reason}}",
+      "rejectedHelp": "Fix the details and submit again.",
+      "editResubmit": "Edit and resubmit",
+      "check": "Check status"
+    }
+  },
+  "business": {
+    "title": "Business profile",
+    "reviewRule": "Changing the name, PAN or map pin sends your business for a quick review. Your live offers stay up meanwhile.",
+    "details": "Details",
+    "saveDetails": "Save details",
+    "location": "Location",
+    "saveLocation": "Save location",
+    "savePan": "Save PAN",
+    "newPanPhoto": "New PAN photo",
+    "needsReview": "Changing this needs a review",
+    "saved": "Saved.",
+    "savedReview": "Saved. Your business is back in review; offers stay live.",
+    "hours": "Opening hours",
+    "hoursHelp": "Tap a day to open or close it. Times are 24-hour, e.g. 09:00. A closing time before the opening time means after midnight.",
+    "opens": "Opens",
+    "closes": "Closes",
+    "closed": "Closed",
+    "saveHours": "Save hours",
+    "hoursInvalid": "Check the times for {{day}}.",
+    "days": {
+      "0": "Sunday",
+      "1": "Monday",
+      "2": "Tuesday",
+      "3": "Wednesday",
+      "4": "Thursday",
+      "5": "Friday",
+      "6": "Saturday"
+    }
   }
 }
