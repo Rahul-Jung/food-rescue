@@ -15,6 +15,7 @@ import {
 } from '../../src/features/auth/api';
 import { useLanguageStore } from '../../src/store/language';
 import { useOtpLockStore } from '../../src/store/otpLock';
+import { useSessionStore } from '../../src/store/session';
 import { color, space } from '../../src/theme';
 
 type EmailMode = 'signin' | 'signup';
@@ -52,6 +53,7 @@ export default function LoginScreen() {
     try {
       await sendOtp('phone', id, locale);
       markSent(id);
+      useSessionStore.getState().setOtpPending(true);
       router.push({ pathname: '/otp', params: { channel: 'phone', id } });
     } catch (e) {
       if (isAuthFailure(e) && e.smsDown) {
@@ -110,6 +112,7 @@ export default function LoginScreen() {
     try {
       await sendOtp('email', id, locale);
       markSent(id);
+      useSessionStore.getState().setOtpPending(true);
       router.push({ pathname: '/otp', params: { channel: 'email', id } });
     } catch (e) {
       setError(failureText(e));

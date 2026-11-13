@@ -36,6 +36,7 @@ export async function logout(deps: LogoutDeps = defaultDeps): Promise<void> {
     useLocationStore.getState().setPoint(null);
     useOnboardingStore.getState().resetForLogout();
     useSessionStore.getState().setPasswordRecovery(false);
+    useSessionStore.getState().setOtpPending(false);
     useSessionStore.getState().setSession(null);
     deps.resetAnalytics();
   }

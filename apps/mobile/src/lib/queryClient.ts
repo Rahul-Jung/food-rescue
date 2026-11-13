@@ -1,11 +1,31 @@
 import NetInfo from '@react-native-community/netinfo';
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
-import { focusManager, onlineManager, QueryClient } from '@tanstack/react-query';
+import { toAppError } from '@food-rescue/shared';
+import {
+  focusManager,
+  MutationCache,
+  onlineManager,
+  QueryCache,
+  QueryClient,
+} from '@tanstack/react-query';
 import { AppState } from 'react-native';
 
+import { useSessionStore } from '../store/session';
 import { appStringStorage } from './storage';
 
+/**
+ * T2.7: if any request answers ACCOUNT_SUSPENDED, the status changed while the
+ * app was open; mark the session suspended so the gate shows the blocked screen.
+ */
+export function onSuspendedError(error: unknown) {
+  if (toAppError(error).code === 'ACCOUNT_SUSPENDED') {
+    useSessionStore.getState().setStatus('suspended');
+  }
+}
+
 export const queryClient = new QueryClient({
+  queryCache: new QueryCache({ onError: onSuspendedError }),
+  mutationCache: new MutationCache({ onError: onSuspendedError }),
   defaultOptions: {
     queries: {
       staleTime: 30_000,
