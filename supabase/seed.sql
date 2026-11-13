@@ -18,6 +18,31 @@ set value = '[
 ]'::jsonb
 where key = 'pilot_areas';
 
+-- T2.8 local admin (admin panel, email + password, then TOTP enrolment).
+-- Admin accounts are created only by SQL seed or another admin (plan section 8).
+--   admin@foodrescue.local / LocalAdmin2026  (local only, never staging / production)
+insert into auth.users (
+  instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
+  raw_app_meta_data, raw_user_meta_data, created_at, updated_at,
+  confirmation_token, recovery_token, email_change_token_new, email_change,
+  phone_change, phone_change_token, email_change_token_current, reauthentication_token
+) values (
+  '00000000-0000-0000-0000-000000000000', '00000000-0000-0000-0000-0000000ad001',
+  'authenticated', 'authenticated', 'admin@foodrescue.local',
+  extensions.crypt('LocalAdmin2026', extensions.gen_salt('bf')), now(),
+  '{"provider": "email", "providers": ["email"]}', '{"full_name": "Local Admin"}', now(), now(),
+  '', '', '', '', '', '', '', ''
+) on conflict (id) do nothing;
+
+insert into auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at)
+values (
+  '00000000-0000-0000-0000-0000000ad001', '00000000-0000-0000-0000-0000000ad001',
+  '{"sub": "00000000-0000-0000-0000-0000000ad001", "email": "admin@foodrescue.local", "email_verified": true}',
+  'email', now(), now(), now()
+) on conflict do nothing;
+
+update public.profiles set role = 'admin' where id = '00000000-0000-0000-0000-0000000ad001';
+
 -- T2.7 test logins (local only; phone OTP, the code shows in the sms-hook log):
 --   +9779800000001  vendor             -> lands on vendor home
 --   +9779800000002  suspended customer -> sees the blocked screen
