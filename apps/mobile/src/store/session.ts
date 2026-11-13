@@ -32,10 +32,13 @@ interface SessionState {
   status: AppStatus | null;
   /** Signed in from a password-reset link: must set a new password first. */
   passwordRecovery: boolean;
+  /** An OTP was sent in this sign-in attempt (cleared on verify and logout). */
+  otpPending: boolean;
   setSession: (session: Session | null) => void;
   /** Server said ACCOUNT_SUSPENDED mid-session: block at once. */
   setStatus: (status: AppStatus) => void;
   setPasswordRecovery: (on: boolean) => void;
+  setOtpPending: (on: boolean) => void;
 }
 
 export const useSessionStore = create<SessionState>((set) => ({
@@ -44,6 +47,7 @@ export const useSessionStore = create<SessionState>((set) => ({
   role: null,
   status: null,
   passwordRecovery: false,
+  otpPending: false,
   setSession: (session) =>
     set((s) => ({
       session,
@@ -53,6 +57,7 @@ export const useSessionStore = create<SessionState>((set) => ({
     })),
   setStatus: (status) => set({ status }),
   setPasswordRecovery: (passwordRecovery) => set({ passwordRecovery }),
+  setOtpPending: (otpPending) => set({ otpPending }),
 }));
 
 /** Selectors used by screens and the route gate. */

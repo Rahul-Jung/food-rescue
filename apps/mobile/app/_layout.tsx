@@ -61,6 +61,7 @@ function AuthGate({ children }: { children: ReactNode }) {
   const role = useSessionStore((s) => s.role);
   const status = useSessionStore((s) => s.status);
   const passwordRecovery = useSessionStore((s) => s.passwordRecovery);
+  const otpPending = useSessionStore((s) => s.otpPending);
   const onboarding = useOnboardingStore();
 
   if (!ready) {
@@ -73,7 +74,7 @@ function AuthGate({ children }: { children: ReactNode }) {
 
   const [group, screen = 'index'] = segments;
   const target = resolveRoute(
-    { ...onboarding, signedIn, passwordRecovery, role, status },
+    { ...onboarding, signedIn, passwordRecovery, otpPending, role, status },
     group,
     screen,
     __DEV__,

@@ -20,6 +20,11 @@ export interface GateInput {
   introSeen: boolean;
   signedIn: boolean;
   locationDone: boolean;
+  /**
+   * A code was just sent in this sign-in attempt. Without it the OTP screen
+   * is stale (e.g. left in the history before a logout) and goes to login.
+   */
+  otpPending?: boolean;
   /** Signed in from a password-reset link (T2.5). */
   passwordRecovery?: boolean;
   /** From the JWT (T2.1 hook); a missing role is treated as customer. */
@@ -82,6 +87,9 @@ export function resolveRoute(
   const step = authStep(input);
 
   if (step !== 'app') {
+    if (step === 'login' && group === '(auth)' && screen === 'otp' && !input.otpPending) {
+      return '/login';
+    }
     if (group === '(auth)' && allowedAuthScreens(step).includes(screen ?? '')) return null;
     return `/${step}`;
   }

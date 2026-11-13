@@ -102,3 +102,20 @@ describe('suspended and deleted users', () => {
     expect(resolveRoute({ ...base, status: 'suspended' }, '(system)', 'update')).toBeNull();
   });
 });
+
+describe('after logout the OTP screen is not reused', () => {
+  const loggedOut = { ...base, signedIn: false };
+
+  it('a code just sent: the OTP screen stays', () => {
+    expect(resolveRoute({ ...loggedOut, otpPending: true }, '(auth)', 'otp')).toBeNull();
+  });
+
+  it('no code sent in this attempt (stale history after logout): goes to login', () => {
+    expect(resolveRoute(loggedOut, '(auth)', 'otp')).toBe('/login');
+    expect(resolveRoute({ ...loggedOut, otpPending: false }, '(auth)', 'otp')).toBe('/login');
+  });
+
+  it('the login screen itself is untouched', () => {
+    expect(resolveRoute(loggedOut, '(auth)', 'login')).toBeNull();
+  });
+});

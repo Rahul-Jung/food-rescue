@@ -17,6 +17,7 @@ import { isAuthFailure, sendOtp, verifyOtp, type AuthChannel } from '../../src/f
 import { useAppSettings } from '../../src/lib/appSettings';
 import { useLanguageStore } from '../../src/store/language';
 import { useOtpLockStore } from '../../src/store/otpLock';
+import { useSessionStore } from '../../src/store/session';
 import { color, space } from '../../src/theme';
 
 /** C-04 Enter OTP: 6 boxes; resend after 30 s; 5 wrong = 15 min lock; SMS down = offer email. */
@@ -61,6 +62,7 @@ export default function OtpScreen() {
     try {
       await verifyOtp(channel, id, value);
       clear(id);
+      useSessionStore.getState().setOtpPending(false);
       router.replace('/location');
     } catch (e) {
       setCode('');

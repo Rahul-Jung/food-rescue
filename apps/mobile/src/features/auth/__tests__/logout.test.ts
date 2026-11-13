@@ -27,6 +27,7 @@ describe('logout clears the user data and keeps device settings', () => {
     useLocationStore.getState().setPoint({ lat: 27.67, lng: 85.32, source: 'area' });
     useOtpLockStore.getState().registerWrong('+9779812345678');
     useSessionStore.getState().setPasswordRecovery(true);
+    useSessionStore.getState().setOtpPending(true);
 
     const signOut = jest.fn(async () => ({ error: null }));
     const resetAnalytics = jest.fn();
@@ -43,6 +44,7 @@ describe('logout clears the user data and keeps device settings', () => {
     expect(appStringStorage.getItem('query-cache')).toBeNull();
     // user stores reset
     expect(useLocationStore.getState().point).toBeNull();
+    expect(useSessionStore.getState().otpPending).toBe(false);
     expect(useOnboardingStore.getState().locationDone).toBe(false);
     expect(useOnboardingStore.getState().area).toBeNull();
     expect(useSessionStore.getState().session).toBeNull();
