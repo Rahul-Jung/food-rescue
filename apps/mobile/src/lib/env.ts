@@ -9,5 +9,7 @@ export const env = {
   supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ?? '',
   sentryDsn: process.env.EXPO_PUBLIC_SENTRY_DSN ?? '',
   posthogKey: process.env.EXPO_PUBLIC_POSTHOG_KEY ?? '',
+  /** Android needs it in the build; without it the Google map would crash. */
+  googleMapsKey: process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY ?? '',
   posthogHost: process.env.EXPO_PUBLIC_POSTHOG_HOST ?? 'https://eu.i.posthog.com',
 };

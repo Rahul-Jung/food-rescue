@@ -1,12 +1,13 @@
 import { insidePilotArea } from '@food-rescue/shared';
 import * as Location from 'expo-location';
 import { useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import MapView, { type Region } from 'react-native-maps';
 import { useTranslation } from 'react-i18next';
 
 import { Button, Text } from '../../components';
 import { useAppSettings } from '../../lib/appSettings';
+import { env } from '../../lib/env';
 import { color, radius, space } from '../../theme';
 
 export interface Pin {
@@ -74,26 +75,42 @@ export function PinPicker({
   };
 
   const outside = pin ? !insidePilotArea(pin.lat, pin.lng, polygon) : false;
+  // Google Maps on Android crashes without an API key (local builds without
+  // EXPO_PUBLIC_GOOGLE_MAPS_KEY). Then the phone's location sets the pin.
+  const mapAvailable = Platform.OS !== 'android' || env.googleMapsKey !== '';
 
   return (
     <View style={styles.wrap}>
-      <View style={styles.mapWrap}>
-        <MapView
-          ref={map}
-          style={styles.map}
-          initialRegion={initialRegion}
-          onRegionChangeComplete={(r, details) => {
-            // Only a drag by the user places the pin, not the first render.
-            if (details?.isGesture !== false) onChange({ lat: r.latitude, lng: r.longitude });
-          }}
-          accessibilityLabel={t('vendorOnboarding.location.mapLabel')}
-        />
-        {/* Fixed pin in the middle: the map moves under it. */}
-        <View pointerEvents="none" style={styles.pinWrap}>
-          <View style={styles.pinHead} />
-          <View style={styles.pinStem} />
+      {mapAvailable ? (
+        <View style={styles.mapWrap}>
+          <MapView
+            ref={map}
+            style={styles.map}
+            initialRegion={initialRegion}
+            onRegionChangeComplete={(r, details) => {
+              // Only a drag by the user places the pin, not the first render.
+              if (details?.isGesture !== false) onChange({ lat: r.latitude, lng: r.longitude });
+            }}
+            accessibilityLabel={t('vendorOnboarding.location.mapLabel')}
+          />
+          {/* Fixed pin in the middle: the map moves under it. */}
+          <View pointerEvents="none" style={styles.pinWrap}>
+            <View style={styles.pinHead} />
+            <View style={styles.pinStem} />
+          </View>
         </View>
-      </View>
+      ) : (
+        <View style={[styles.mapWrap, styles.noMap]}>
+          <Text color="grey700" style={styles.noMapText}>
+            {t('vendorOnboarding.location.noMap')}
+          </Text>
+          {pin ? (
+            <Text variant="caption" color="grey700">
+              {`${pin.lat.toFixed(5)}, ${pin.lng.toFixed(5)}`}
+            </Text>
+          ) : null}
+        </View>
+      )}
       <Button
         variant="secondary"
         label={t('vendorOnboarding.location.useMine')}
@@ -123,6 +140,14 @@ const styles = StyleSheet.create({
     borderColor: color.grey300,
   },
   map: { flex: 1 },
+  noMap: {
+    height: 120,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: space.s,
+    padding: space.l,
+  },
+  noMapText: { textAlign: 'center' },
   pinWrap: {
     position: 'absolute',
     left: '50%',

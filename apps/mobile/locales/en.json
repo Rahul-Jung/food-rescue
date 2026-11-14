@@ -303,7 +303,8 @@
       "landmarkHint": "Optional, e.g. opposite the temple gate",
       "noPermission": "Location permission is off. Drag the map instead.",
       "noFix": "Could not find your location. Drag the map instead.",
-      "pinRequired": "Place the pin on the map."
+      "pinRequired": "Place the pin on the map.",
+      "noMap": "The map is not available in this build. Stand at your shop and tap \"Use my current location\" to set the pin."
     },
     "documents": {
       "title": "Documents",
