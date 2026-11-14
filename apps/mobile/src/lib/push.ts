@@ -28,8 +28,9 @@ export async function registerForPush(): Promise<string | null> {
   if (Platform.OS === 'android') {
     await Notifications.setNotificationChannelAsync('default', {
       name: 'Food Rescue',
+      // No `sound` here: a name means a bundled custom file; leaving it out
+      // uses the phone's default notification sound.
       importance: Notifications.AndroidImportance.HIGH,
-      sound: 'default',
     });
   }
 
