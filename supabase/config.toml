@@ -328,8 +328,11 @@ max_enrolled_factors = 10
 
 # Control MFA via App Authenticator (TOTP)
 [auth.mfa.totp]
-enroll_enabled = false
-verify_enabled = false
+# T2.8: admin panel requires TOTP (aal2). The 12-hour admin session is enforced
+# in apps/admin/proxy.ts, not with [auth.sessions] timebox, which would also cut
+# customer and vendor sessions.
+enroll_enabled = true
+verify_enabled = true
 
 # Configure MFA via Phone Messaging
 [auth.mfa.phone]
@@ -448,4 +451,9 @@ enabled = true
 
 # Called by Supabase Auth with a signed webhook, not a user JWT.
 [functions.sms-hook]
+verify_jwt = false
+
+# T3.7: called by the notifications database webhook with a shared secret
+# (x-webhook-secret), not a user JWT.
+[functions.send-push]
 verify_jwt = false

@@ -14,6 +14,8 @@ import { Button, OfflineBanner, Text } from '../src/components';
 import { resolveRoute } from '../src/features/auth/gate';
 import { useAuthDeepLinks } from '../src/features/auth/useAuthDeepLinks';
 import { useAuthSession } from '../src/features/auth/useAuthSession';
+import { useVendorIntent } from '../src/features/vendor-onboarding/useVendorIntent';
+import { usePushRegistration } from '../src/lib/push';
 import { posthog } from '../src/lib/analytics';
 import { useOnboardingStore } from '../src/store/onboarding';
 import { selectSignedIn, useSessionStore } from '../src/store/session';
@@ -63,8 +65,23 @@ function AuthGate({ children }: { children: ReactNode }) {
   const passwordRecovery = useSessionStore((s) => s.passwordRecovery);
   const otpPending = useSessionStore((s) => s.otpPending);
   const onboarding = useOnboardingStore();
+  // V-01 (T3.3): finish turning a new sign-in into a vendor account first.
+  const vendorIntent = useVendorIntent();
+  // T3.7: register this device for push once signed in.
+  usePushRegistration();
 
-  if (!ready) {
+  if (vendorIntent.failed) {
+    return (
+      <View style={styles.crash}>
+        <Text variant="title" style={styles.center}>
+          {i18n.t('vendorOnboarding.signupFailed')}
+        </Text>
+        <Button label={i18n.t('common.retry')} onPress={vendorIntent.clear} />
+      </View>
+    );
+  }
+
+  if (!ready || vendorIntent.pending) {
     return (
       <View style={styles.loading} accessibilityLabel={i18n.t('common.loading')}>
         <ActivityIndicator color={color.ink} size="large" />

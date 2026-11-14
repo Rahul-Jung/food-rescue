@@ -12,6 +12,7 @@
     "@food-rescue/shared": "workspace:*",
     "@radix-ui/react-slot": "1.5.0",
     "@sentry/nextjs": "11.11.0",
+    "@supabase/ssr": "0.12.7",
     "@supabase/supabase-js": "2.119.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
