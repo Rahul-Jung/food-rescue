@@ -481,7 +481,7 @@
       "price_below_original": "Your price must be lower than the original price.",
       "quantity_total": "Enter how many (at least 1).",
       "quantity_floor": "Can't be less than what is already reserved.",
-      "time": "Use a time like 18:30.",
+      "time": "Pick a time.",
       "pickup_start": "Check the pickup start.",
       "pickup_end": "Check the pickup end.",
       "expires_at": "Check the order stop time.",
