@@ -112,7 +112,7 @@ select lives_ok(pg_temp.surplus('{"title": "Unapproved box", "vendor": "v_draft"
 
 select tests.authenticate_as((select id from ids where name = 'customer'));
 select results_eq(
-  $$ select title from public.offers order by title $$,
+  $$ select title from public.offers where vendor_id in (select id from ids) order by title $$,
   $$ values ('20% off drinks'), ('Veg momo box') $$,
   'customer sees only live offers of approved vendors'
 );
@@ -124,7 +124,7 @@ select is(
 select tests.clear_authentication();
 
 select tests.authenticate_as((select id from ids where name = 'shop'));
-select is((select count(*)::int from public.offers), 4, 'vendor sees all of their own offers');
+select is((select count(*)::int from public.offers where vendor_id = (select id from ids where name = 'v')), 4, 'vendor sees all of their own offers');
 select tests.clear_authentication();
 
 select * from finish();

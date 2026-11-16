@@ -11,8 +11,11 @@ export interface OfferCardProps {
   vendorName: string;
   /** Already formatted, e.g. pickup window and distance. */
   meta: string;
-  pricePaisa: number;
+  /** Absent for a happy hour "x% off" deal, which shows dealLabel instead. */
+  pricePaisa?: number | null;
   originalPaisa?: number;
+  /** e.g. "25% off" for a deal without a price. */
+  dealLabel?: string;
   badges?: BadgeKind[];
   onPress?: () => void;
 }
@@ -23,6 +26,7 @@ export function OfferCard({
   meta,
   pricePaisa,
   originalPaisa,
+  dealLabel,
   badges = [],
   onPress,
 }: OfferCardProps) {
@@ -42,7 +46,11 @@ export function OfferCard({
       <Text variant="caption" color="grey500">
         {meta}
       </Text>
-      <PriceTag pricePaisa={pricePaisa} originalPaisa={originalPaisa} />
+      {pricePaisa != null ? (
+        <PriceTag pricePaisa={pricePaisa} originalPaisa={originalPaisa} />
+      ) : dealLabel ? (
+        <Text variant="title">{dealLabel}</Text>
+      ) : null}
     </Card>
   );
 }

@@ -946,9 +946,14 @@ export type Database = {
         };
       };
       custom_access_token_hook: { Args: { event: Json }; Returns: Json };
+      deal_next_start: { Args: { p_at?: string; p_offer_id: string }; Returns: string };
       expire_offers: { Args: Record<PropertyKey, never>; Returns: Json };
       is_deal_live: { Args: { p_at?: string; p_offer_id: string }; Returns: boolean };
       is_valid_profile_name: { Args: { p_name: string }; Returns: boolean };
+      join_waitlist: {
+        Args: { p_area?: string; p_contact: string; p_lat?: number; p_lng?: number };
+        Returns: string;
+      };
       jsonb_text: { Args: { k: string; p: Json }; Returns: string };
       jwt_is_active: { Args: Record<PropertyKey, never>; Returns: boolean };
       jwt_is_admin: { Args: Record<PropertyKey, never>; Returns: boolean };
@@ -966,6 +971,45 @@ export type Database = {
           error: true;
         } & 'the function public.lng with parameter or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache';
       };
+      nearby_offers: {
+        Args: {
+          p_food_type?: Database['public']['Enums']['food_type'];
+          p_kind?: Database['public']['Enums']['offer_kind'];
+          p_lat: number;
+          p_lng: number;
+          p_page?: number;
+          p_pickup_after?: string;
+          p_price_max?: number;
+          p_price_min?: number;
+          p_q?: string;
+          p_radius_m?: number;
+          p_sort?: string;
+          p_vendor_type?: Database['public']['Enums']['vendor_type'];
+        };
+        Returns: {
+          deal_live: boolean;
+          discount_pct: number;
+          distance_m: number;
+          expires_at: string;
+          food_type: Database['public']['Enums']['food_type'];
+          id: string;
+          is_featured: boolean;
+          lat: number;
+          lng: number;
+          next_start: string;
+          offer_kind: Database['public']['Enums']['offer_kind'];
+          original_price: number;
+          pickup_end: string;
+          pickup_start: string;
+          price: number;
+          quantity_left: number;
+          title: string;
+          title_ne: string;
+          vendor_id: string;
+          vendor_name: string;
+          vendor_type: Database['public']['Enums']['vendor_type'];
+        }[];
+      };
       now_npt: { Args: Record<PropertyKey, never>; Returns: string };
       offer_open_orders: { Args: { p_offer_id: string }; Returns: number };
       offer_visible_to_customers: { Args: { p_offer_id: string }; Returns: boolean };
@@ -976,6 +1020,7 @@ export type Database = {
         Args: { p_expo_token: string; p_platform: string };
         Returns: undefined;
       };
+      search_query: { Args: { p_q: string }; Returns: unknown };
       set_offer_status: {
         Args: { p_offer_id: string; p_status: Database['public']['Enums']['offer_status'] };
         Returns: {

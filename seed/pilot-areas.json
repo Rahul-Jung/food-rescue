@@ -1,0 +1,36 @@
+{
+  "_comment": "T5.1 pilot boundary (Kathmandu + Lalitpur metro, approximate) and pick-an-area centre points. supabase/seed.sql writes the same values into app_settings (pilot_polygon, pilot_areas); keep the two in sync.",
+  "pilot_polygon": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [85.282, 27.748],
+        [85.31, 27.756],
+        [85.345, 27.75],
+        [85.37, 27.728],
+        [85.365, 27.695],
+        [85.35, 27.67],
+        [85.34, 27.645],
+        [85.315, 27.64],
+        [85.29, 27.655],
+        [85.285, 27.685],
+        [85.27, 27.71],
+        [85.282, 27.748]
+      ]
+    ]
+  },
+  "pilot_areas": [
+    { "name": "Thamel", "name_ne": "ठमेल", "lat": 27.7154, "lng": 85.3123 },
+    { "name": "Lazimpat", "name_ne": "लाजिम्पाट", "lat": 27.7215, "lng": 85.3197 },
+    { "name": "New Road", "name_ne": "न्युरोड", "lat": 27.7041, "lng": 85.3093 },
+    { "name": "Maharajgunj", "name_ne": "महाराजगन्ज", "lat": 27.736, "lng": 85.3305 },
+    { "name": "Baneshwor", "name_ne": "बानेश्वर", "lat": 27.6889, "lng": 85.336 },
+    { "name": "Koteshwor", "name_ne": "कोटेश्वर", "lat": 27.679, "lng": 85.349 },
+    { "name": "Kupondole", "name_ne": "कुपण्डोल", "lat": 27.688, "lng": 85.317 },
+    { "name": "Pulchowk", "name_ne": "पुल्चोक", "lat": 27.6782, "lng": 85.3186 },
+    { "name": "Sanepa", "name_ne": "सानेपा", "lat": 27.6845, "lng": 85.3065 },
+    { "name": "Jawalakhel", "name_ne": "जावलाखेल", "lat": 27.673, "lng": 85.314 },
+    { "name": "Patan", "name_ne": "पाटन", "lat": 27.6727, "lng": 85.3253 },
+    { "name": "Satdobato", "name_ne": "सातदोबाटो", "lat": 27.659, "lng": 85.325 }
+  ]
+}

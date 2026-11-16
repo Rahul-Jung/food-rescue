@@ -514,5 +514,80 @@
     "am": "AM",
     "pm": "PM",
     "clear": "Clear time"
+  },
+  "discover": {
+    "liveNow": "Happy hour live now",
+    "pickup": "Pickup {{window}}",
+    "left": "{{n}} left",
+    "chooseArea": "Choose your area",
+    "nearMe": "Near me",
+    "showingNear": "Showing offers near",
+    "map": "Map",
+    "list": "Back to list",
+    "mapLabel": "Map of nearby offers",
+    "cluster": "Offers here: {{count}}. Tap to zoom in",
+    "noMap": "The map is not available on this build yet. Use the list instead.",
+    "searchLabel": "Search food or places",
+    "searchPlaceholder": "Search momo, bakery…",
+    "filters": "Filters",
+    "filtersCount": "Filters ({{count}})",
+    "clearFilters": "Clear filters",
+    "featured": "Featured",
+    "chips": {
+      "happyHour": "Happy hour now",
+      "veg": "Veg",
+      "bakery": "Bakery",
+      "under200": "Under Rs. 200"
+    },
+    "kind": {
+      "all": "All",
+      "surplus": "Surplus",
+      "happyHour": "Happy hour"
+    },
+    "sort": {
+      "distance": "Nearest",
+      "price": "Lowest price",
+      "discount": "Biggest discount",
+      "ending": "Ending soon"
+    },
+    "filter": {
+      "kind": "Offer type",
+      "foodType": "Food type",
+      "price": "Price (Rs.)",
+      "min": "Min",
+      "max": "Max",
+      "priceInvalid": "Enter whole rupees only",
+      "priceConflict": "Min price must not be more than max price",
+      "distance": "Distance",
+      "km": "{{km}} km",
+      "pickupAfter": "Pick up after",
+      "pickupHint": "Shows offers you can still collect after this time today",
+      "sort": "Sort by",
+      "apply": "Show results"
+    },
+    "empty": {
+      "title": "No offers nearby",
+      "bodyRadius": "Nothing within your distance right now. Try a wider area.",
+      "body": "Nothing near you right now. Check again later.",
+      "try3km": "Show offers within 3 km",
+      "deals": "Happy hour deals near you"
+    },
+    "loadFailed": "Could not load offers",
+    "more": "Show more",
+    "locating": "Finding your location…",
+    "noFix": "We could not find your location",
+    "noResults": "No matching offers",
+    "noResultsBody": "Nothing found for \"{{q}}\" nearby."
+  },
+  "waitlist": {
+    "title": "We are not in your area yet",
+    "body": "Food Rescue is live in Kathmandu and Lalitpur. Leave your phone or email and we will tell you when we reach you.",
+    "contact": "Phone or email",
+    "contactHint": "For example 98XXXXXXXX or name@example.com",
+    "contactInvalid": "Enter a phone number or an email address",
+    "area": "Your area",
+    "join": "Join the waitlist",
+    "saved": "Thanks! We will let you know.",
+    "pickArea": "Choose a pilot area instead"
   }
 }

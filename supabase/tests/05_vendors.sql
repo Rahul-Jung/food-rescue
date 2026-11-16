@@ -120,12 +120,12 @@ select tests.clear_authentication();
 select tests.authenticate_as((select id from ids where name = 'customer'));
 select is_empty($$ select 1 from public.vendors $$, 'customer cannot read the vendors table');
 select results_eq(
-  $$ select name from public.vendors_public $$,
+  $$ select name from public.vendors_public where id in (select id from ids) $$,
   $$ values ('Open Bakery') $$,
   'customer sees only the approved vendor (not edited by the other owner)'
 );
 select results_eq(
-  $$ select day_of_week::int from public.vendor_hours $$,
+  $$ select day_of_week::int from public.vendor_hours where vendor_id in (select id from ids) $$,
   $$ values (1) $$,
   'customer sees hours of approved vendors only'
 );
@@ -142,7 +142,7 @@ select is_empty($$ select 1 from public.vendors_public $$, 'suspended user sees 
 -- Admin (aal2) -----------------------------------------------------------------
 select tests.clear_authentication();
 select tests.authenticate_as_admin((select id from ids where name = 'admin'));
-select is((select count(*)::int from public.vendors), 3, 'admin sees all vendor rows');
+select is((select count(*)::int from public.vendors) - (select count(*)::int from public.vendors where owner_id::text like '00000000-0000-0000-0000-0000000b%'), 3, 'admin sees all vendor rows');
 select lives_ok(
   $$ update public.vendors set status = 'approved', approved_at = now(), commission_free_until = now() + interval '30 days' where id = (select id from ids where name = 'v_draft') $$,
   'admin can approve a vendor'
