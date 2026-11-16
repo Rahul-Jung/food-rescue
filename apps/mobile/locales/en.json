@@ -506,5 +506,12 @@
     "comingSoon": "Pickups, balances and ratings start counting when orders open.",
     "strikes": "{{n}} strike(s) in the last 30 days",
     "strikesBody": "Cancelling paid orders gives a strike. Three in 30 days puts your account under review."
+  },
+  "time": {
+    "pick": "Pick a time",
+    "hour": "Hour",
+    "minute": "Minute",
+    "am": "AM",
+    "pm": "PM"
   }
 }

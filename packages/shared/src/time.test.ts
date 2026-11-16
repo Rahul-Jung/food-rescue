@@ -1,4 +1,11 @@
-import { formatTime, formatTimeRange, nptParts } from './time';
+import {
+  clockFrom12h,
+  clockTo12h,
+  formatClock,
+  formatTime,
+  formatTimeRange,
+  nptParts,
+} from './time';
 
 describe('NPT times (UTC+05:45)', () => {
   it('shifts UTC to Kathmandu wall time', () => {
@@ -49,5 +56,24 @@ describe('NPT times (UTC+05:45)', () => {
 
   it('rejects an invalid date', () => {
     expect(() => formatTime('not a date')).toThrow(RangeError);
+  });
+});
+
+describe('12-hour clock for "HH:MM" values', () => {
+  it('formats wall-clock times with AM/PM', () => {
+    expect(formatClock('17:30')).toBe('5:30 PM');
+    expect(formatClock('00:00')).toBe('12:00 AM');
+    expect(formatClock('12:05')).toBe('12:05 PM');
+    expect(formatClock('21:00', 'ne', 'devanagari')).toBe('राति ९:००');
+    expect(formatClock('bad')).toBe('bad');
+  });
+
+  it('round-trips 12-hour parts', () => {
+    expect(clockTo12h('00:15')).toEqual({ hour: 12, minute: 15, pm: false });
+    expect(clockTo12h('13:45')).toEqual({ hour: 1, minute: 45, pm: true });
+    expect(clockTo12h('24:00')).toBeNull();
+    expect(clockFrom12h(12, 0, false)).toBe('00:00');
+    expect(clockFrom12h(12, 30, true)).toBe('12:30');
+    expect(clockFrom12h(5, 0, true)).toBe('17:00');
   });
 });

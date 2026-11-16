@@ -7,11 +7,11 @@ import {
 } from '@food-rescue/shared';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Chip, Input, Text } from '../../../src/components';
+import { Button, Chip, Input, Text, TimeField } from '../../../src/components';
 import {
   OfferError,
   saveOfferPhotos,
@@ -117,10 +117,7 @@ export default function DealEditScreen() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <KeyboardAvoidingView
-        style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
+      <KeyboardAvoidingView style={styles.flex} behavior="padding">
         <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
           <Text variant="title" accessibilityRole="header">
@@ -229,21 +226,17 @@ export default function DealEditScreen() {
               {form.times.map((w, i) => (
                 <View key={i} style={styles.row}>
                   <View style={styles.flex}>
-                    <Input
+                    <TimeField
                       label={t('business.opens')}
                       value={w.start}
-                      onChangeText={(v) => setTime(i, { start: v })}
-                      keyboardType="numbers-and-punctuation"
-                      maxLength={5}
+                      onChange={(v) => setTime(i, { start: v })}
                     />
                   </View>
                   <View style={styles.flex}>
-                    <Input
+                    <TimeField
                       label={t('business.closes')}
                       value={w.end}
-                      onChangeText={(v) => setTime(i, { end: v })}
-                      keyboardType="numbers-and-punctuation"
-                      maxLength={5}
+                      onChange={(v) => setTime(i, { end: v })}
                     />
                   </View>
                   {form.times.length > 1 ? (
