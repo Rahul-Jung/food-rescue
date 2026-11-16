@@ -1,4 +1,3 @@
-import * as Location from 'expo-location';
 import { useRouter, type Href } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -7,18 +6,11 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, EmptyState, ListRow, Text } from '../../src/components';
 import { useAppSettings } from '../../src/lib/appSettings';
+import { areaPoint, locate, pilotAreas } from '../../src/lib/location';
 import { useLanguageStore } from '../../src/store/language';
 import { useLocationStore } from '../../src/store/location';
 import { useOnboardingStore, type PilotArea } from '../../src/store/onboarding';
 import { color, space } from '../../src/theme';
-
-function pilotAreas(value: unknown): PilotArea[] {
-  if (!Array.isArray(value)) return [];
-  return value.filter(
-    (a): a is PilotArea =>
-      typeof a?.name === 'string' && typeof a?.lat === 'number' && typeof a?.lng === 'number',
-  );
-}
 
 /** C-05 Allow location: foreground only, used per search, never stored; denied = pick an area. */
 export default function LocationScreen() {
@@ -40,18 +32,14 @@ export default function LocationScreen() {
   const useMyLocation = async () => {
     setBusy(true);
     try {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
+      const r = await locate();
+      if (!r.ok) {
         setDenied(true);
         setShowAreas(true);
         return;
       }
-      const pos = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
-      setPoint({ lat: pos.coords.latitude, lng: pos.coords.longitude, source: 'gps' });
+      setPoint(r.point);
       done();
-    } catch {
-      setDenied(true);
-      setShowAreas(true);
     } finally {
       setBusy(false);
     }
@@ -59,7 +47,7 @@ export default function LocationScreen() {
 
   const pick = (area: PilotArea) => {
     setArea(area);
-    setPoint({ lat: area.lat, lng: area.lng, source: 'area', areaName: area.name });
+    setPoint(areaPoint(area));
     done();
   };
 
