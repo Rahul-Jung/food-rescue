@@ -4,7 +4,11 @@ import type { ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 
 /** Pages built so far link; the rest arrive in later sprints. */
-const BUILT: Record<string, string> = { Dashboard: '/', Vendors: '/vendors' };
+const BUILT: Record<string, string> = {
+  Dashboard: '/',
+  Vendors: '/vendors',
+  Featured: '/featured',
+};
 
 const NAV = [
   'Dashboard',

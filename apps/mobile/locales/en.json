@@ -589,5 +589,77 @@
     "join": "Join the waitlist",
     "saved": "Thanks! We will let you know.",
     "pickArea": "Choose a pilot area instead"
+  },
+  "offerDetail": {
+    "photo": "Photo {{n}}",
+    "noPhoto": "No photo",
+    "expired": "Expired",
+    "pickup": "Pickup {{window}}",
+    "left": "{{n}} left",
+    "noneLeft": "None left",
+    "weight": "About {{g}} g",
+    "ingredients": "Ingredients",
+    "from": "From",
+    "seeVendor": "See this place",
+    "offline": "You are offline. Reserving needs a connection.",
+    "expiredBody": "This offer has ended.",
+    "soldOutBody": "This offer is sold out.",
+    "from_price": "{{price}} each",
+    "reserve": "Reserve"
+  },
+  "deal": {
+    "liveUntil": "Live until {{time}}",
+    "startsAt": "Starts at {{time}}",
+    "startsTomorrow": "Starts tomorrow, {{time}}",
+    "startsOn": "Starts {{day}}, {{time}}",
+    "noTimes": "No times set",
+    "ended": "Ended",
+    "hours": "Happy hour times",
+    "noPayment": "No payment in the app. Show the pass to staff to get the deal.",
+    "showPass": "Show pass to staff",
+    "passFor": "Happy hour pass",
+    "tapToClose": "Tap to close"
+  },
+  "vendorPage": {
+    "rating": "★ {{avg}} ({{count}} reviews)",
+    "noRating": "No ratings yet",
+    "directions": "Directions",
+    "call": "Call",
+    "mapLabel": "Map showing {{name}}",
+    "offers": "Food to rescue",
+    "noOffers": "No offers right now.",
+    "deals": "Happy hour deals",
+    "noDeals": "No happy hour deals.",
+    "hours": "Opening hours",
+    "reviews": "Reviews",
+    "noReviews": "No reviews yet."
+  },
+  "happyHour": {
+    "title": "Happy hour now",
+    "body": "Deals that are live right now near you.",
+    "emptyTitle": "No happy hour live now",
+    "emptyBody": "Try the food to rescue near you instead.",
+    "seeSurplus": "See food to rescue"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "quantity": "How many?",
+    "limit": "{{left}} left · up to {{max}} per order",
+    "serverTotal": "Total to pay",
+    "total": "Total",
+    "unit": "{{price}} × {{n}}",
+    "priceChanged": "The price changed",
+    "priceChangedBody": "The new total is {{total}}.",
+    "held": "Held for you",
+    "holdEnded": "Your hold ended. Reserve again if any are left.",
+    "holdInfo": "We hold your food for {{min}} minutes while you pay.",
+    "wallet": "Pay with",
+    "wallets": {
+      "esewa": "eSewa",
+      "khalti": "Khalti"
+    },
+    "paymentsSoon": "Online payment is not switched on yet.",
+    "pay": "Pay {{total}}",
+    "reserve": "Reserve"
   }
 }
