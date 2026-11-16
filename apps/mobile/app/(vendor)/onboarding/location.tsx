@@ -1,11 +1,11 @@
 import { toAppError, vendorLocationSchema } from '@food-rescue/shared';
 import { useRouter } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
-import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Input, Text } from '../../../src/components';
+import { Button, Input, Text, FormScrollView } from '../../../src/components';
 import { vendorPin } from '../../../src/features/vendor-onboarding/api';
 import { useMyVendor, useSaveVendor } from '../../../src/features/vendor-onboarding/hooks';
 import { PinPicker, type Pin } from '../../../src/features/vendor-onboarding/PinPicker';
@@ -76,7 +76,7 @@ export default function VendorLocationStep() {
   return (
     <SafeAreaView style={styles.safe}>
       <KeyboardAvoidingView style={styles.flex} behavior="padding">
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        <FormScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <StepHeader step={2} title={t('vendorOnboarding.location.title')} />
           <Text color="grey700">{t('vendorOnboarding.location.help')}</Text>
 
@@ -113,7 +113,7 @@ export default function VendorLocationStep() {
               />
             </View>
           </View>
-        </ScrollView>
+        </FormScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

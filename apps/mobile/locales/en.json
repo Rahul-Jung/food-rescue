@@ -353,7 +353,7 @@
     "saved": "Saved.",
     "savedReview": "Saved. Your business is back in review; offers stay live.",
     "hours": "Opening hours",
-    "hoursHelp": "Tap a day to open or close it. Times are 24-hour, e.g. 09:00. A closing time before the opening time means after midnight.",
+    "hoursHelp": "Tap a day to open or close it. Tap a time to change it. A closing time before the opening time means after midnight.",
     "opens": "Opens",
     "closes": "Closes",
     "closed": "Closed",
@@ -467,7 +467,7 @@
       "dealPrice": "Deal price (Rs.)",
       "days": "Days",
       "windows": "Times",
-      "windowsHelp": "24-hour clock. A closing time before the opening time means after midnight.",
+      "windowsHelp": "Tap a time to change it. A closing time before the opening time means after midnight.",
       "addWindow": "Add another time",
       "active": "Active",
       "save": "Save deal"
@@ -512,6 +512,7 @@
     "hour": "Hour",
     "minute": "Minute",
     "am": "AM",
-    "pm": "PM"
+    "pm": "PM",
+    "clear": "Clear time"
   }
 }

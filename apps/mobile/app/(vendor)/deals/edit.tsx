@@ -7,11 +7,11 @@ import {
 } from '@food-rescue/shared';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Chip, Input, Text, TimeField } from '../../../src/components';
+import { Button, Chip, Input, Text, TimeField, FormScrollView } from '../../../src/components';
 import {
   OfferError,
   saveOfferPhotos,
@@ -118,7 +118,7 @@ export default function DealEditScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <KeyboardAvoidingView style={styles.flex} behavior="padding">
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        <FormScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
           <Text variant="title" accessibilityRole="header">
             {id ? t('vendorOffers.deal.editTitle') : t('vendorOffers.deal.newTitle')}
@@ -278,7 +278,7 @@ export default function DealEditScreen() {
               />
             </>
           ) : null}
-        </ScrollView>
+        </FormScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

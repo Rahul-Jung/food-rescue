@@ -1,11 +1,11 @@
 import { loginEmailSchema, toNpMobileE164 } from '@food-rescue/shared';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Chip, Input, Text } from '../../src/components';
+import { Button, Chip, Input, Text, FormScrollView } from '../../src/components';
 import { isAuthFailure, sendOtp, type AuthChannel } from '../../src/features/auth/api';
 import { useLanguageStore } from '../../src/store/language';
 import { useOtpLockStore } from '../../src/store/otpLock';
@@ -71,7 +71,7 @@ export default function BusinessSignupScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <KeyboardAvoidingView style={styles.flex} behavior="padding">
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        <FormScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <Text variant="title">{t('auth.business.title')}</Text>
           <Text color="grey700">{t('auth.business.body')}</Text>
 
@@ -133,7 +133,7 @@ export default function BusinessSignupScreen() {
 
           <Button label={t('auth.business.sendCode')} loading={busy} onPress={() => void send()} />
           <Button variant="ghost" label={t('auth.business.back')} onPress={() => router.back()} />
-        </ScrollView>
+        </FormScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

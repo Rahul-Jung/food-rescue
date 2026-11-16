@@ -1,11 +1,11 @@
 import { missingVendorFields, panSchema, toAppError } from '@food-rescue/shared';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Input, Text } from '../../../src/components';
+import { Button, Input, Text, FormScrollView } from '../../../src/components';
 import {
   PanTakenError,
   uploadPanDoc,
@@ -96,7 +96,7 @@ export default function VendorDocumentsStep() {
   return (
     <SafeAreaView style={styles.safe}>
       <KeyboardAvoidingView style={styles.flex} behavior="padding">
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        <FormScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <StepHeader step={3} title={t('vendorOnboarding.documents.title')} />
           <Text color="grey700">{t('vendorOnboarding.documents.help')}</Text>
 
@@ -154,7 +154,7 @@ export default function VendorDocumentsStep() {
               />
             </View>
           </View>
-        </ScrollView>
+        </FormScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

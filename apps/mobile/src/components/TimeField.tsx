@@ -19,10 +19,13 @@ export interface TimeFieldProps {
   value: string;
   onChange: (hhmm: string) => void;
   error?: string;
+  hint?: string;
+  /** Optional field: the sheet offers a Clear button that sets an empty value. */
+  optional?: boolean;
 }
 
 /** Time picked by tapping (hour, minute, AM/PM) and shown as 12-hour; no typing, no native dependency. */
-export function TimeField({ label, value, onChange, error }: TimeFieldProps) {
+export function TimeField({ label, value, onChange, error, hint, optional }: TimeFieldProps) {
   const { t } = useTranslation();
   const { locale, digits } = useLanguageStore();
   const [open, setOpen] = useState(false);
@@ -49,7 +52,13 @@ export function TimeField({ label, value, onChange, error }: TimeFieldProps) {
       >
         <Text>{shown}</Text>
       </Pressable>
-      {error ? <Text variant="caption">⚠ {error}</Text> : null}
+      {error ? (
+        <Text variant="caption">⚠ {error}</Text>
+      ) : hint ? (
+        <Text variant="caption" color="grey500">
+          {hint}
+        </Text>
+      ) : null}
 
       <Sheet visible={open} onClose={() => setOpen(false)} title={label}>
         <Text variant="caption" weight={600}>
@@ -85,7 +94,23 @@ export function TimeField({ label, value, onChange, error }: TimeFieldProps) {
         <Text weight={600}>
           {formatClock(clockFrom12h(parts.hour, parts.minute, parts.pm), locale, digits)}
         </Text>
-        <Button label={t('common.ok')} onPress={() => setOpen(false)} />
+        <Button
+          label={t('common.ok')}
+          onPress={() => {
+            if (!clockTo12h(value)) pick({});
+            setOpen(false);
+          }}
+        />
+        {optional && value ? (
+          <Button
+            variant="secondary"
+            label={t('time.clear')}
+            onPress={() => {
+              onChange('');
+              setOpen(false);
+            }}
+          />
+        ) : null}
       </Sheet>
     </View>
   );

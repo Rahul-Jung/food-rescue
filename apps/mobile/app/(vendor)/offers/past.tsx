@@ -1,11 +1,11 @@
-import { nptClock, pickupTimesToday } from '@food-rescue/shared';
+import { formatTime, nptClock, pickupTimesToday } from '@food-rescue/shared';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
-import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Card, Input, ListRow, Text } from '../../../src/components';
+import { Button, Card, ListRow, Text, TimeField, FormScrollView } from '../../../src/components';
 import {
   cloneOffer,
   OfferError,
@@ -17,6 +17,7 @@ import {
 import { useMyOffers, useRefreshOffers } from '../../../src/features/offers/hooks';
 import { PhotoSlots } from '../../../src/features/offers/PhotoSlots';
 import { groupOffers } from '../../../src/features/offers/tabs';
+import { useLanguageStore } from '../../../src/store/language';
 import { color, space } from '../../../src/theme';
 
 /**
@@ -26,6 +27,7 @@ import { color, space } from '../../../src/theme';
  */
 export default function PastOffersScreen() {
   const { t } = useTranslation();
+  const { locale, digits } = useLanguageStore();
   const router = useRouter();
   const params = useLocalSearchParams<{ id?: string }>();
   const offers = useMyOffers();
@@ -108,7 +110,7 @@ export default function PastOffersScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <KeyboardAvoidingView style={styles.flex} behavior="padding">
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        <FormScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
           <Text variant="title" accessibilityRole="header">
             {t('vendorOffers.past.title')}
@@ -120,31 +122,26 @@ export default function PastOffersScreen() {
               <Text color="grey700">{t('vendorOffers.past.help')}</Text>
               <View style={styles.row}>
                 <View style={styles.flex}>
-                  <Input
+                  <TimeField
                     label={t('vendorOffers.fields.pickupStart')}
                     value={start}
-                    onChangeText={setStart}
-                    keyboardType="numbers-and-punctuation"
-                    maxLength={5}
+                    onChange={setStart}
                   />
                 </View>
                 <View style={styles.flex}>
-                  <Input
+                  <TimeField
                     label={t('vendorOffers.fields.pickupEnd')}
                     value={end}
-                    onChangeText={setEnd}
-                    keyboardType="numbers-and-punctuation"
-                    maxLength={5}
+                    onChange={setEnd}
                   />
                 </View>
               </View>
-              <Input
+              <TimeField
+                optional
                 label={t('vendorOffers.fields.expires')}
                 hint={t('vendorOffers.fields.expiresHint')}
                 value={expires}
-                onChangeText={setExpires}
-                keyboardType="numbers-and-punctuation"
-                maxLength={5}
+                onChange={setExpires}
               />
               {needPhoto ? (
                 <>
@@ -176,14 +173,16 @@ export default function PastOffersScreen() {
                 title={o.title}
                 subtitle={
                   o.pickup_end
-                    ? t('vendorOffers.past.lastTime', { time: nptClock(o.pickup_end) })
+                    ? t('vendorOffers.past.lastTime', {
+                        time: formatTime(o.pickup_end, locale, digits),
+                      })
                     : undefined
                 }
                 onPress={() => choose(o)}
               />
             ))
           )}
-        </ScrollView>
+        </FormScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

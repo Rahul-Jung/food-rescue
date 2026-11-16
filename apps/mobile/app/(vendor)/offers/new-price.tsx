@@ -6,11 +6,11 @@ import {
 } from '@food-rescue/shared';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Input, OfferCard, Text } from '../../../src/components';
+import { Button, Input, OfferCard, Text, TimeField, FormScrollView } from '../../../src/components';
 import {
   createOffer,
   OfferError,
@@ -96,7 +96,7 @@ export default function NewOfferPrice() {
   return (
     <SafeAreaView style={styles.safe}>
       <KeyboardAvoidingView style={styles.flex} behavior="padding">
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        <FormScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
           <Text variant="caption" color="grey700">
             {t('vendorOnboarding.stepOf', { step: 2, total: 2 })}
@@ -143,34 +143,29 @@ export default function NewOfferPrice() {
           />
           <View style={styles.row}>
             <View style={styles.flex}>
-              <Input
+              <TimeField
                 label={t('vendorOffers.fields.pickupStart')}
                 error={fieldError(t, errors.pickup_start)}
                 value={draft.pickup_start}
-                onChangeText={(v) => set({ pickup_start: v })}
-                keyboardType="numbers-and-punctuation"
-                maxLength={5}
+                onChange={(v) => set({ pickup_start: v })}
               />
             </View>
             <View style={styles.flex}>
-              <Input
+              <TimeField
                 label={t('vendorOffers.fields.pickupEnd')}
                 error={fieldError(t, errors.pickup_end)}
                 value={draft.pickup_end}
-                onChangeText={(v) => set({ pickup_end: v })}
-                keyboardType="numbers-and-punctuation"
-                maxLength={5}
+                onChange={(v) => set({ pickup_end: v })}
               />
             </View>
           </View>
-          <Input
+          <TimeField
+            optional
             label={t('vendorOffers.fields.expires')}
             hint={t('vendorOffers.fields.expiresHint')}
             error={fieldError(t, errors.expires_at)}
             value={draft.expires_at}
-            onChangeText={(v) => set({ expires_at: v })}
-            keyboardType="numbers-and-punctuation"
-            maxLength={5}
+            onChange={(v) => set({ expires_at: v })}
           />
           {errors.photos ? <Text>{`⚠ ${fieldError(t, errors.photos)}`}</Text> : null}
 
@@ -205,7 +200,7 @@ export default function NewOfferPrice() {
             loading={busy}
             onPress={() => void publish()}
           />
-        </ScrollView>
+        </FormScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

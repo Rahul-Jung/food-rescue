@@ -1,11 +1,11 @@
 import { FOOD_TYPES, OFFER_PHOTOS_MAX, OFFER_TITLE_MAX } from '@food-rescue/shared';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Chip, Input, Text } from '../../../src/components';
+import { Button, Chip, Input, Text, FormScrollView } from '../../../src/components';
 import { fieldError } from '../../../src/features/offers/fieldError';
 import { PhotoSlots } from '../../../src/features/offers/PhotoSlots';
 import { useOfferDraftStore } from '../../../src/store/offerDraft';
@@ -35,7 +35,7 @@ export default function NewOfferDetails() {
   return (
     <SafeAreaView style={styles.safe}>
       <KeyboardAvoidingView style={styles.flex} behavior="padding">
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        <FormScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <Button
             variant="ghost"
             label={t('common.cancel')}
@@ -105,7 +105,7 @@ export default function NewOfferDetails() {
             maxLength={6}
           />
           <Button label={t('vendorOffers.new.next')} onPress={next} />
-        </ScrollView>
+        </FormScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

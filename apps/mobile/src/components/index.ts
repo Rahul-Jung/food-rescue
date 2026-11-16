@@ -5,6 +5,7 @@ export * from './Chip';
 export * from './CodeDisplay';
 export * from './Countdown';
 export * from './EmptyState';
+export * from './FormScrollView';
 export * from './Input';
 export * from './ListRow';
 export * from './OfferCard';

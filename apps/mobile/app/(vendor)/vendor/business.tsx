@@ -11,11 +11,19 @@ import {
 } from '@food-rescue/shared';
 import { useRouter } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
-import { Image, KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native';
+import { Image, KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Card, Chip, Input, Text, TimeField } from '../../../src/components';
+import {
+  Button,
+  Card,
+  Chip,
+  Input,
+  Text,
+  TimeField,
+  FormScrollView,
+} from '../../../src/components';
 import { useUpdateProfile } from '../../../src/features/profile/hooks';
 import {
   PanTakenError,
@@ -255,7 +263,7 @@ export default function BusinessProfileScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <KeyboardAvoidingView style={styles.flex} behavior="padding">
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        <FormScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
           <Text variant="title" accessibilityRole="header">
             {t('business.title')}
@@ -455,7 +463,7 @@ export default function BusinessProfileScreen() {
             <Chip label="English" selected={locale === 'en'} onPress={() => chooseLanguage('en')} />
             <Chip label="नेपाली" selected={locale === 'ne'} onPress={() => chooseLanguage('ne')} />
           </View>
-        </ScrollView>
+        </FormScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

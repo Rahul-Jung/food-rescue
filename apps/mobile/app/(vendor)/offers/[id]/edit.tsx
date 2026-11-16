@@ -10,11 +10,19 @@ import {
 } from '@food-rescue/shared';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Card, Chip, Input, Text } from '../../../../src/components';
+import {
+  Button,
+  Card,
+  Chip,
+  Input,
+  Text,
+  TimeField,
+  FormScrollView,
+} from '../../../../src/components';
 import {
   OfferError,
   saveOfferPhotos,
@@ -132,7 +140,7 @@ export default function EditOfferScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <KeyboardAvoidingView style={styles.flex} behavior="padding">
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        <FormScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
           <Text variant="title" accessibilityRole="header">
             {t('vendorOffers.edit.title')}
@@ -237,34 +245,29 @@ export default function EditOfferScreen() {
           />
           <View style={styles.row}>
             <View style={styles.flex}>
-              <Input
+              <TimeField
                 label={t('vendorOffers.fields.pickupStart')}
                 error={fieldError(t, errors.pickup_start)}
                 value={start}
-                onChangeText={setStart}
-                keyboardType="numbers-and-punctuation"
-                maxLength={5}
+                onChange={setStart}
               />
             </View>
             <View style={styles.flex}>
-              <Input
+              <TimeField
                 label={t('vendorOffers.fields.pickupEnd')}
                 error={fieldError(t, errors.pickup_end)}
                 value={end}
-                onChangeText={setEnd}
-                keyboardType="numbers-and-punctuation"
-                maxLength={5}
+                onChange={setEnd}
               />
             </View>
           </View>
-          <Input
+          <TimeField
+            optional
             label={t('vendorOffers.fields.expires')}
             hint={t('vendorOffers.fields.expiresHint')}
             error={fieldError(t, errors.expires_at)}
             value={expires}
-            onChangeText={setExpires}
-            keyboardType="numbers-and-punctuation"
-            maxLength={5}
+            onChange={setExpires}
           />
 
           {formError ? <Text>{`⚠ ${formError}`}</Text> : null}
@@ -274,7 +277,7 @@ export default function EditOfferScreen() {
             disabled={!o}
             onPress={() => void save()}
           />
-        </ScrollView>
+        </FormScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
