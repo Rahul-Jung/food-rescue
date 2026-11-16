@@ -1,5 +1,5 @@
-import { useRouter, type Href } from 'expo-router';
-import { useState } from 'react';
+import { Redirect, useRouter, type Href } from 'expo-router';
+import { useEffect, useState } from 'react';
 import { KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
@@ -7,8 +7,10 @@ import { useTranslation } from 'react-i18next';
 import { Button, FormScrollView, Input, Text } from '../../src/components';
 import { AreaSheet } from '../../src/features/discover/AreaSheet';
 import { joinWaitlist } from '../../src/features/discover/api';
-import { useSearchPoint } from '../../src/features/discover/hooks';
+import { useOutsidePilot, useSearchPoint } from '../../src/features/discover/hooks';
+import { logout } from '../../src/features/auth/logout';
 import { OfferError } from '../../src/features/offers/api';
+import { useAppSettings } from '../../src/lib/appSettings';
 import { areaPoint } from '../../src/lib/location';
 import { useLocationStore } from '../../src/store/location';
 import { useOnboardingStore, type PilotArea } from '../../src/store/onboarding';
@@ -21,6 +23,12 @@ export default function WaitlistScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const point = useSearchPoint();
+  const outside = useOutsidePilot(point);
+  const settings = useAppSettings();
+  // The pilot boundary may have grown since it was cached: check again on open.
+  useEffect(() => {
+    void settings.refetch();
+  }, []);
   const setPoint = useLocationStore((s) => s.setPoint);
   const setArea = useOnboardingStore((s) => s.setArea);
   const [contact, setContact] = useState('');
@@ -54,6 +62,9 @@ export default function WaitlistScreen() {
     setPicking(false);
     router.replace('/' as Href);
   };
+
+  // Back inside the pilot area (fresh settings, or a picked area): go home.
+  if (point && !outside && settings.isFetchedAfterMount) return <Redirect href={'/' as Href} />;
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -92,6 +103,7 @@ export default function WaitlistScreen() {
             label={t('waitlist.pickArea')}
             onPress={() => setPicking(true)}
           />
+          <Button variant="ghost" label={t('home.signOut')} onPress={() => void logout()} />
         </FormScrollView>
       </KeyboardAvoidingView>
       <AreaSheet visible={picking} onClose={() => setPicking(false)} onPick={pick} />
