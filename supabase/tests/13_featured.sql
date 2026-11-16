@@ -6,7 +6,7 @@ create extension if not exists pgtap with schema extensions;
 select plan(14);
 
 create temp table ids (name text primary key, id uuid) on commit drop;
-grant select on ids to authenticated;
+grant select, insert on ids to authenticated;
 insert into ids values
   ('admin', tests.create_user('feat-admin@example.test', 'admin')),
   ('fv_owner', tests.create_user('fv@example.test', 'vendor')),
