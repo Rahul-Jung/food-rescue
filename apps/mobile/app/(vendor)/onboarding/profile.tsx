@@ -1,11 +1,11 @@
 import { toAppError, vendorProfileSchema, vendorTypeSchema } from '@food-rescue/shared';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { Image, KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Chip, Input, Text } from '../../../src/components';
+import { Button, Chip, Input, Text, FormScrollView } from '../../../src/components';
 import { useMyVendor, useSaveVendor } from '../../../src/features/vendor-onboarding/hooks';
 import { nextStep } from '../../../src/features/vendor-onboarding/route';
 import { StepHeader } from '../../../src/features/vendor-onboarding/StepHeader';
@@ -99,11 +99,8 @@ export default function VendorProfileStep() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <KeyboardAvoidingView
-        style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <KeyboardAvoidingView style={styles.flex} behavior="padding">
+        <FormScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <StepHeader step={1} title={t('vendorOnboarding.profile.title')} />
           {vendor?.status === 'rejected' && vendor.reject_reason ? (
             <Text color="grey700">
@@ -196,7 +193,7 @@ export default function VendorProfileStep() {
             disabled={!vendor}
             onPress={next}
           />
-        </ScrollView>
+        </FormScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

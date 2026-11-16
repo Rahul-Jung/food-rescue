@@ -11,11 +11,19 @@ import {
 } from '@food-rescue/shared';
 import { useRouter } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
-import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { Image, KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Card, Chip, Input, Text } from '../../../src/components';
+import {
+  Button,
+  Card,
+  Chip,
+  Input,
+  Text,
+  TimeField,
+  FormScrollView,
+} from '../../../src/components';
 import { useUpdateProfile } from '../../../src/features/profile/hooks';
 import {
   PanTakenError,
@@ -254,11 +262,8 @@ export default function BusinessProfileScreen() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <KeyboardAvoidingView
-        style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <KeyboardAvoidingView style={styles.flex} behavior="padding">
+        <FormScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
           <Text variant="title" accessibilityRole="header">
             {t('business.title')}
@@ -422,21 +427,17 @@ export default function BusinessProfileScreen() {
                 {row?.open ? (
                   <>
                     <View style={styles.flex}>
-                      <Input
+                      <TimeField
                         label={t('business.opens')}
                         value={row.opens}
-                        onChangeText={(v) => setDay(d, { opens: v })}
-                        maxLength={5}
-                        keyboardType="numbers-and-punctuation"
+                        onChange={(v) => setDay(d, { opens: v })}
                       />
                     </View>
                     <View style={styles.flex}>
-                      <Input
+                      <TimeField
                         label={t('business.closes')}
                         value={row.closes}
-                        onChangeText={(v) => setDay(d, { closes: v })}
-                        maxLength={5}
-                        keyboardType="numbers-and-punctuation"
+                        onChange={(v) => setDay(d, { closes: v })}
                       />
                     </View>
                   </>
@@ -462,7 +463,7 @@ export default function BusinessProfileScreen() {
             <Chip label="English" selected={locale === 'en'} onPress={() => chooseLanguage('en')} />
             <Chip label="नेपाली" selected={locale === 'ne'} onPress={() => chooseLanguage('ne')} />
           </View>
-        </ScrollView>
+        </FormScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

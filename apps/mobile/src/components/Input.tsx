@@ -2,6 +2,7 @@ import { StyleSheet, TextInput, View, type TextInputProps } from 'react-native';
 
 import { useLanguageStore } from '../store/language';
 import { color, fontFamily, fontSize, maxFontScale, radius, space, touch } from '../theme';
+import { revealFocusedInput } from './FormScrollView';
 import { Text } from './Text';
 
 export interface InputProps extends Omit<TextInputProps, 'style'> {
@@ -10,7 +11,7 @@ export interface InputProps extends Omit<TextInputProps, 'style'> {
   error?: string;
 }
 
-export function Input({ label, hint, error, ...rest }: InputProps) {
+export function Input({ label, hint, error, onFocus, ...rest }: InputProps) {
   const locale = useLanguageStore((s) => s.locale);
   return (
     <View style={styles.wrap}>
@@ -27,6 +28,10 @@ export function Input({ label, hint, error, ...rest }: InputProps) {
           !!error && styles.inputError,
         ]}
         {...rest}
+        onFocus={(e) => {
+          onFocus?.(e);
+          revealFocusedInput();
+        }}
       />
       {error ? (
         <Text variant="caption">⚠ {error}</Text>

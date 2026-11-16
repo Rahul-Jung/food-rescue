@@ -1,11 +1,11 @@
 import { loginEmailSchema, passwordSchema, toNpMobileE164 } from '@food-rescue/shared';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Chip, Input, Text } from '../../src/components';
+import { Button, Chip, Input, Text, FormScrollView } from '../../src/components';
 import {
   isAuthFailure,
   sendOtp,
@@ -141,11 +141,8 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <KeyboardAvoidingView
-        style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <KeyboardAvoidingView style={styles.flex} behavior="padding">
+        <FormScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <Text variant="title">{t('auth.login.title')}</Text>
           <Text color="grey700">
             {tab === 'phone' ? t('auth.login.subtitle') : t('auth.email.subtitle')}
@@ -261,7 +258,7 @@ export default function LoginScreen() {
               onPress={() => router.push('/business')}
             />
           </View>
-        </ScrollView>
+        </FormScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

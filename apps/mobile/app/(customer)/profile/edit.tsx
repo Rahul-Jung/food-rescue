@@ -10,11 +10,11 @@ import {
 } from '@food-rescue/shared';
 import { useRouter } from 'expo-router';
 import { useEffect, useReducer, useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Input, OtpInput, Text } from '../../../src/components';
+import { Button, Input, OtpInput, Text, FormScrollView } from '../../../src/components';
 import { isAuthFailure } from '../../../src/features/auth/api';
 import { confirmPhoneChange, startPhoneChange } from '../../../src/features/profile/api';
 import { myProfileKey, useMyProfile, useUpdateProfile } from '../../../src/features/profile/hooks';
@@ -132,11 +132,8 @@ export default function EditProfileScreen() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <KeyboardAvoidingView
-        style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <KeyboardAvoidingView style={styles.flex} behavior="padding">
+        <FormScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
           <Text variant="title">{t('profile.edit')}</Text>
 
@@ -222,7 +219,7 @@ export default function EditProfileScreen() {
             )}
             {phoneMsg ? <Text weight={600}>{phoneMsg}</Text> : null}
           </View>
-        </ScrollView>
+        </FormScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

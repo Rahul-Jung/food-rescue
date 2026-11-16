@@ -353,7 +353,7 @@
     "saved": "Saved.",
     "savedReview": "Saved. Your business is back in review; offers stay live.",
     "hours": "Opening hours",
-    "hoursHelp": "Tap a day to open or close it. Times are 24-hour, e.g. 09:00. A closing time before the opening time means after midnight.",
+    "hoursHelp": "Tap a day to open or close it. Tap a time to change it. A closing time before the opening time means after midnight.",
     "opens": "Opens",
     "closes": "Closes",
     "closed": "Closed",
@@ -368,5 +368,151 @@
       "5": "Friday",
       "6": "Saturday"
     }
+  },
+  "vendorOffers": {
+    "title": "My offers",
+    "newOffer": "New offer",
+    "newDeal": "New happy hour deal",
+    "photos": "Photos (up to {{max}})",
+    "removePhoto": "Remove photo {{n}}",
+    "tabs": {
+      "active": "Active",
+      "happy": "Happy hour",
+      "past": "Past"
+    },
+    "empty": {
+      "active": "No active offers. Post your first one.",
+      "happy": "No happy hour deals yet.",
+      "past": "No past offers yet."
+    },
+    "left": "{{n}} of {{total}} left",
+    "dealPct": "{{pct}}% off",
+    "deleteTitle": "Delete this offer?",
+    "deleteBody": "\"{{title}}\" will be removed. This can't be undone.",
+    "status": {
+      "draft": "Draft",
+      "live": "Live",
+      "sold_out": "Sold out",
+      "expired": "Expired",
+      "deactivated": "Hidden",
+      "deleted": "Deleted"
+    },
+    "actions": {
+      "publish": "Publish",
+      "edit": "Edit",
+      "soldOut": "Mark sold out",
+      "reopen": "Open again",
+      "deactivate": "Hide",
+      "pause": "Pause",
+      "resume": "Resume",
+      "turnOn": "Show again",
+      "clone": "Re-activate for today",
+      "delete": "Delete"
+    },
+    "foodTypes": {
+      "veg": "Veg",
+      "non_veg": "Non-veg",
+      "vegan": "Vegan"
+    },
+    "fields": {
+      "title": "Name",
+      "titleNe": "Nepali name",
+      "foodType": "Food type",
+      "ingredients": "Ingredients",
+      "weight": "Weight (grams)",
+      "originalPrice": "Original price (Rs.)",
+      "price": "Your price (Rs.)",
+      "quantity": "How many",
+      "pickupStart": "Pickup from",
+      "pickupEnd": "Pickup until",
+      "expires": "Stop orders at",
+      "expiresHint": "Optional. Leave empty to take orders until pickup ends."
+    },
+    "new": {
+      "title": "New offer",
+      "next": "Next: price and pickup",
+      "priceTitle": "Price and pickup",
+      "discount": "{{pct}}% off",
+      "discountNone": "Discount shows here",
+      "preview": "Preview",
+      "hidePreview": "Hide preview",
+      "publish": "Publish",
+      "savedAsDraft": "Saved as a draft, but the photos did not finish. Check your connection and tap Publish again."
+    },
+    "edit": {
+      "title": "Edit offer",
+      "reserved": "{{n}} reserved",
+      "reservedRules": "Because people have reserved, you can't lower the quantity below that, and the pickup time can only be made longer. Their price stays the same.",
+      "quantityFloor": "At least {{n}} (already reserved)",
+      "save": "Save changes"
+    },
+    "past": {
+      "title": "Past offers",
+      "help": "Same offer, new pickup times for today. Check the times and tap once.",
+      "timesPassed": "Those times have passed today. Change them and try again.",
+      "needPhoto": "The old photo is gone. Add a new one to go live.",
+      "reactivate": "Re-activate for today",
+      "lastTime": "Last pickup until {{time}}"
+    },
+    "deal": {
+      "newTitle": "New happy hour deal",
+      "editTitle": "Edit happy hour deal",
+      "help": "Dine-in deal. Customers see it only during its hours. No payment in the app.",
+      "liveNow": "Live now",
+      "name": "Deal name",
+      "description": "What's included",
+      "modePercent": "Discount %",
+      "modePrice": "Deal price",
+      "percent": "Discount (%)",
+      "dealPrice": "Deal price (Rs.)",
+      "days": "Days",
+      "windows": "Times",
+      "windowsHelp": "Tap a time to change it. A closing time before the opening time means after midnight.",
+      "addWindow": "Add another time",
+      "active": "Active",
+      "save": "Save deal"
+    },
+    "errors": {
+      "title": "Enter a name of 2 to 120 letters.",
+      "food_type": "Pick a food type.",
+      "weight_g": "Enter the weight in grams.",
+      "original_price": "Enter the original price.",
+      "price": "Enter your price.",
+      "price_below_original": "Your price must be lower than the original price.",
+      "quantity_total": "Enter how many (at least 1).",
+      "quantity_floor": "Can't be less than what is already reserved.",
+      "time": "Pick a time.",
+      "pickup_start": "Check the pickup start.",
+      "pickup_end": "Check the pickup end.",
+      "expires_at": "Check the order stop time.",
+      "pickup_end_future": "Pickup must end later today, not in the past.",
+      "expires_after_end": "Orders must stop by the end of pickup.",
+      "expires_future": "The order stop time has already passed.",
+      "photos": "Add at least one photo.",
+      "discount": "Enter a discount from 1 to 90%.",
+      "windows": "Pick at least one day and a time that does not end when it starts.",
+      "pickup_extend_only": "People have reserved: the pickup time can only be made longer."
+    }
+  },
+  "dashboard": {
+    "today": "Today",
+    "activeOffers": "Active offers",
+    "liveDeals": "Deals live now",
+    "pickups": "Pickups today",
+    "collected": "Collected",
+    "available": "Available",
+    "pending": "Pending",
+    "rating": "Rating",
+    "comingSoon": "Pickups, balances and ratings start counting when orders open.",
+    "strikes": "{{n}} strike(s) in the last 30 days",
+    "strikesBody": "Cancelling paid orders gives a strike. Three in 30 days puts your account under review."
+  },
+  "time": {
+    "pick": "Pick a time",
+    "hour": "Hour",
+    "minute": "Minute",
+    "am": "AM",
+    "pm": "PM",
+    "clear": "Clear time"
   }
 }

@@ -47,10 +47,36 @@ export function formatTime(
   digits: Digits = 'latin',
 ): string {
   const { hour, minute } = nptParts(value);
+  return formatHourMinute(hour, minute, locale, digits);
+}
+
+function formatHourMinute(hour: number, minute: number, locale: Locale, digits: Digits): string {
   const h12 = hour % 12 === 0 ? 12 : hour % 12;
   const clock = toDigits(`${h12}:${String(minute).padStart(2, '0')}`, digits);
   if (locale === 'ne') return `${nepaliDayPart(hour)} ${clock}`;
   return `${clock} ${hour < 12 ? 'AM' : 'PM'}`;
+}
+
+/** A wall-clock "HH:MM" split into 12-hour parts; null when not a valid time. */
+export function clockTo12h(hhmm: string): { hour: number; minute: number; pm: boolean } | null {
+  const m = /^([01]\d|2[0-3]):([0-5]\d)$/.exec(hhmm);
+  if (!m) return null;
+  const h = Number(m[1]);
+  return { hour: h % 12 === 0 ? 12 : h % 12, minute: Number(m[2]), pm: h >= 12 };
+}
+
+/** 12-hour parts back to "HH:MM" (hour 1-12). */
+export function clockFrom12h(hour: number, minute: number, pm: boolean): string {
+  const h = (hour % 12) + (pm ? 12 : 0);
+  return `${String(h).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+}
+
+/** "17:30" shown as "5:30 PM" / "साँझ ५:३०"; an invalid value is returned as typed. */
+export function formatClock(hhmm: string, locale: Locale = 'en', digits: Digits = 'latin'): string {
+  const p = clockTo12h(hhmm);
+  if (!p) return hhmm;
+  const hour = (p.hour % 12) + (p.pm ? 12 : 0);
+  return formatHourMinute(hour, p.minute, locale, digits);
 }
 
 /** "5:30 PM - 7:00 PM" for a pickup window. */

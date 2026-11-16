@@ -10,3 +10,4 @@ export * from './auth';
 export * from './adminAccess';
 export * from './mfaEnrolment';
 export * from './vendor';
+export * from './offer';
