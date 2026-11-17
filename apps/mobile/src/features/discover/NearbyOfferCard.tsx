@@ -1,4 +1,5 @@
 import { formatDistance, formatTimeRange, toDigits } from '@food-rescue/shared';
+import { useRouter, type Href } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
 import { OfferCard, type BadgeKind } from '../../components';
@@ -17,6 +18,7 @@ export function NearbyOfferCard({
   onPress?: () => void;
 }) {
   const { t } = useTranslation();
+  const router = useRouter();
   const { locale, digits } = useLanguageStore();
   const title = locale === 'ne' && offer.title_ne ? offer.title_ne : offer.title;
   const distance = formatDistance(offer.distance_m, locale, digits);
@@ -51,7 +53,16 @@ export function NearbyOfferCard({
           : undefined
       }
       badges={badges}
-      onPress={onPress}
+      onPress={
+        onPress ??
+        // C-10 offer detail for surplus, C-12 deal pass for happy hour.
+        (() =>
+          router.push(
+            (offer.offer_kind === 'happy_hour'
+              ? `/deal/${offer.id}`
+              : `/offer/${offer.id}`) as Href,
+          ))
+      }
     />
   );
 }

@@ -156,6 +156,12 @@ export default function Home() {
         />
       </ScrollView>
 
+      <Link href={'/happy-hour' as Href} asChild>
+        <Pressable accessibilityRole="button" style={styles.happyLink}>
+          <Text variant="button">{`☀ ${t('happyHour.title')} ›`}</Text>
+        </Pressable>
+      </Link>
+
       {featured.length ? (
         <View style={styles.featured}>
           <Text weight={600}>{t('discover.featured')}</Text>
@@ -248,6 +254,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.box,
   },
   chips: { gap: space.s },
+  happyLink: { minHeight: touch, justifyContent: 'center' },
   featured: { gap: space.s },
   featuredCard: { width: 260 },
   empty: { gap: space.l },

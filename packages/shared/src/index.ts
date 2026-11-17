@@ -12,3 +12,4 @@ export * from './mfaEnrolment';
 export * from './vendor';
 export * from './offer';
 export * from './discover';
+export * from './dealTime';
