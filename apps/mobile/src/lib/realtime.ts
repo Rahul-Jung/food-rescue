@@ -58,7 +58,10 @@ export function useOfferQuantity(
     };
 
     const channel = supabase
-      .channel(`offer-qty-${offerId}`)
+      // A unique topic per subscription: supabase.channel() hands back an
+      // existing (already subscribed) channel for a reused name, and .on()
+      // then throws while the old one is still being removed.
+      .channel(`offer-qty-${offerId}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`)
       .on(
         'postgres_changes',
         { event: 'UPDATE', schema: 'public', table: 'offers', filter: `id=eq.${offerId}` },
