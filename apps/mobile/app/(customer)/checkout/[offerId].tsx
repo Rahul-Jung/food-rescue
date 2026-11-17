@@ -50,6 +50,18 @@ export default function CheckoutScreen() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Offline and never opened before: nothing saved to show.
+  if (q.isPending && q.fetchStatus === 'paused') {
+    return (
+      <SafeAreaView style={styles.safe}>
+        <EmptyState
+          title={t('offerDetail.offlineNoData')}
+          actionLabel={t('common.back')}
+          onAction={() => router.back()}
+        />
+      </SafeAreaView>
+    );
+  }
   if (q.isPending) {
     return (
       <SafeAreaView style={styles.safe}>
@@ -114,7 +126,9 @@ export default function CheckoutScreen() {
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
       <ScrollView contentContainerStyle={styles.content}>
-        <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
+        <View style={styles.back}>
+          <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
+        </View>
         <Text variant="title" accessibilityRole="header">
           {t('checkout.title')}
         </Text>
@@ -227,6 +241,7 @@ export default function CheckoutScreen() {
 }
 
 const styles = StyleSheet.create({
+  back: { alignSelf: 'flex-start' },
   safe: { flex: 1, backgroundColor: color.paper },
   content: { padding: space.l, gap: space.m },
   block: { gap: space.s },

@@ -35,6 +35,18 @@ export default function VendorPageScreen() {
   const q = useVendorPage(id);
   const v = q.data;
 
+  // Offline and never opened before: nothing saved to show.
+  if (q.isPending && q.fetchStatus === 'paused') {
+    return (
+      <SafeAreaView style={styles.safe}>
+        <EmptyState
+          title={t('offerDetail.offlineNoData')}
+          actionLabel={t('common.back')}
+          onAction={() => router.back()}
+        />
+      </SafeAreaView>
+    );
+  }
   if (q.isPending) {
     return (
       <SafeAreaView style={styles.safe}>
@@ -67,7 +79,9 @@ export default function VendorPageScreen() {
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
       <ScrollView contentContainerStyle={styles.content}>
-        <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
+        <View style={styles.back}>
+          <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
+        </View>
         <Text variant="title" accessibilityRole="header">
           {v.name}
         </Text>
@@ -230,6 +244,7 @@ export default function VendorPageScreen() {
 type VendorType = 'restaurant' | 'grocery' | 'bakery' | 'cafe' | 'hotel' | 'other';
 
 const styles = StyleSheet.create({
+  back: { alignSelf: 'flex-start' },
   safe: { flex: 1, backgroundColor: color.paper },
   content: { padding: space.l, gap: space.m },
   actions: { flexDirection: 'row', gap: space.s },

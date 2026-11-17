@@ -47,6 +47,18 @@ export default function DealPassScreen() {
     if (!liveNow) setFull(false);
   }, [liveNow]);
 
+  // Offline and never opened before: nothing saved to show.
+  if (q.isPending && q.fetchStatus === 'paused') {
+    return (
+      <SafeAreaView style={styles.safe}>
+        <EmptyState
+          title={t('offerDetail.offlineNoData')}
+          actionLabel={t('common.back')}
+          onAction={() => router.back()}
+        />
+      </SafeAreaView>
+    );
+  }
   if (q.isPending) {
     return (
       <SafeAreaView style={styles.safe}>
@@ -83,7 +95,9 @@ export default function DealPassScreen() {
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
       <ScrollView contentContainerStyle={styles.content}>
-        <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
+        <View style={styles.back}>
+          <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
+        </View>
         {deal.images[0] ? (
           <Image
             source={{ uri: photoUrl(deal.images[0].path) }}
@@ -168,6 +182,7 @@ export default function DealPassScreen() {
 }
 
 const styles = StyleSheet.create({
+  back: { alignSelf: 'flex-start' },
   safe: { flex: 1, backgroundColor: color.paper },
   content: { padding: space.l, gap: space.m },
   photo: { height: 200, borderRadius: radius.box, backgroundColor: color.grey100 },

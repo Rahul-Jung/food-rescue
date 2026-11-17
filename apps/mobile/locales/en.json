@@ -602,6 +602,7 @@
     "from": "From",
     "seeVendor": "See this place",
     "offline": "You are offline. Reserving needs a connection.",
+    "offlineNoData": "You are offline and this page isn't saved on your phone yet.",
     "expiredBody": "This offer has ended.",
     "soldOutBody": "This offer is sold out.",
     "from_price": "{{price}} each",

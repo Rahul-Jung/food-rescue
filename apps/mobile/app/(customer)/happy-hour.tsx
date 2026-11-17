@@ -57,7 +57,9 @@ export default function HappyHourScreen() {
         contentContainerStyle={styles.list}
         ListHeaderComponent={
           <View style={styles.header}>
-            <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
+            <View style={styles.back}>
+              <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
+            </View>
             <Text variant="title" accessibilityRole="header">
               {`☀ ${t('happyHour.title')}`}
             </Text>
@@ -79,6 +81,7 @@ export default function HappyHourScreen() {
 }
 
 const styles = StyleSheet.create({
+  back: { alignSelf: 'flex-start' },
   safe: { flex: 1, backgroundColor: color.paper },
   list: { padding: space.l, gap: space.m },
   header: { gap: space.s },

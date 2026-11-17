@@ -15,12 +15,15 @@ export interface OfferQuantity {
   status: string | null;
   /** Current price in paisa (C-13 shows a notice when it changes). */
   price: number | null;
+  /** Current expiry (C-10 turns Reserve off when it passes, even if edited while open). */
+  expiresAt: string | null;
   /** 'live' while the Realtime channel is joined, 'polling' otherwise. */
   mode: 'live' | 'polling';
 }
 
 interface OfferRow {
   price?: number | null;
+  expires_at?: string | null;
   quantity_total: number | null;
   quantity_reserved: number;
   status: string;
@@ -34,7 +37,7 @@ export function quantityFromRow(row: Partial<OfferRow> | null | undefined): numb
 async function fetchQuantity(id: string): Promise<OfferRow | null> {
   const { data } = await supabase
     .from('offers')
-    .select('price, quantity_total, quantity_reserved, status')
+    .select('price, expires_at, quantity_total, quantity_reserved, status')
     .eq('id', id)
     .maybeSingle();
   return (data as OfferRow | null) ?? null;
@@ -48,12 +51,19 @@ export function useOfferQuantity(
     quantityLeft: initialLeft,
     status: null,
     price: null,
+    expiresAt: null,
     mode: 'polling',
   });
   const joined = useRef(false);
 
   useEffect(() => {
-    setState({ quantityLeft: initialLeft, status: null, price: null, mode: 'polling' });
+    setState({
+      quantityLeft: initialLeft,
+      status: null,
+      price: null,
+      expiresAt: null,
+      mode: 'polling',
+    });
     if (!offerId) return;
     let cancelled = false;
     const apply = (row: OfferRow | null) => {
@@ -63,6 +73,7 @@ export function useOfferQuantity(
         quantityLeft: quantityFromRow(row),
         status: row.status,
         price: row.price ?? s.price,
+        expiresAt: row.expires_at ?? s.expiresAt,
       }));
     };
 

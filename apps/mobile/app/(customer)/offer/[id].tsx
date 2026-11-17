@@ -31,9 +31,22 @@ export default function OfferDetailScreen() {
     offer?.offer_kind === 'surplus' ? offer.id : null,
     offer?.quantity_left ?? null,
   );
-  // Re-check at expiry so the button turns off while the screen is open.
-  useNowPassing(offer?.expires_at);
+  // Live expiry (an edit reaches the open screen) and a re-check when it passes.
+  const expiresAt = live.expiresAt ?? offer?.expires_at ?? null;
+  useNowPassing(expiresAt);
 
+  // Offline and never opened before: nothing saved to show.
+  if (q.isPending && q.fetchStatus === 'paused') {
+    return (
+      <SafeAreaView style={styles.safe}>
+        <EmptyState
+          title={t('offerDetail.offlineNoData')}
+          actionLabel={t('common.back')}
+          onAction={() => router.back()}
+        />
+      </SafeAreaView>
+    );
+  }
   if (q.isPending) {
     return (
       <SafeAreaView style={styles.safe}>
@@ -63,11 +76,13 @@ export default function OfferDetailScreen() {
 
   const left = live.quantityLeft ?? offer.quantity_left;
   const status = live.status === 'sold_out' || left === 0 ? 'sold_out' : offer.status;
-  const view = { ...offer, status, quantity_left: left };
+  const price = live.price ?? offer.price;
+  const view = { ...offer, status, quantity_left: left, expires_at: expiresAt };
   const bookable = canReserve(view);
   const expired =
     offer.status === 'expired' ||
-    (!!offer.expires_at && new Date(offer.expires_at).getTime() <= Date.now());
+    live.status === 'expired' ||
+    (!!expiresAt && new Date(expiresAt).getTime() <= Date.now());
   const offline = net.isConnected === false;
   const title = locale === 'ne' && offer.title_ne ? offer.title_ne : offer.title;
   const v = offer.vendor;
@@ -75,7 +90,9 @@ export default function OfferDetailScreen() {
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
       <ScrollView contentContainerStyle={styles.content}>
-        <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
+        <View style={styles.back}>
+          <Button variant="ghost" label={t('common.back')} onPress={() => router.back()} />
+        </View>
 
         {offer.images.length ? (
           <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false}>
@@ -109,8 +126,8 @@ export default function OfferDetailScreen() {
         <Text variant="title" accessibilityRole="header">
           {title}
         </Text>
-        {offer.price != null ? (
-          <PriceTag pricePaisa={offer.price} originalPaisa={offer.original_price ?? undefined} />
+        {price != null ? (
+          <PriceTag pricePaisa={price} originalPaisa={offer.original_price ?? undefined} />
         ) : null}
 
         <View style={styles.facts}>
@@ -165,9 +182,9 @@ export default function OfferDetailScreen() {
           <Text variant="caption" color="grey700">
             {expired ? t('offerDetail.expiredBody') : t('offerDetail.soldOutBody')}
           </Text>
-        ) : offer.price != null ? (
+        ) : price != null ? (
           <Text variant="caption" color="grey700">
-            {t('offerDetail.from_price', { price: formatPrice(offer.price, locale, digits) })}
+            {t('offerDetail.from_price', { price: formatPrice(price, locale, digits) })}
           </Text>
         ) : null}
         <Button
@@ -181,6 +198,7 @@ export default function OfferDetailScreen() {
 }
 
 const styles = StyleSheet.create({
+  back: { alignSelf: 'flex-start' },
   safe: { flex: 1, backgroundColor: color.paper },
   content: { padding: space.l, gap: space.m },
   photo: { height: 220, borderRadius: radius.box, backgroundColor: color.grey100 },
